@@ -15,7 +15,7 @@ const Register = () =>{
         // process.env.REACT_APP_REGISTER_REDIRECT_URL
 
         const config =  {
-            url :'localhost:3000/auth/register/confirm' ,
+            url :'https://big-delta.vercel.app/auth/registerComplete' ,
             handleCodeInApp : true
         }
 
