@@ -3,6 +3,7 @@ import NextHead from "../components/global/NextHead";
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Box } from '@chakra-ui/react'
+import MapComponent from '../components/maps/map'
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -16,7 +17,7 @@ export default function Home() {
 </div>
 
 
-
+<MapComponent />
 
 
 

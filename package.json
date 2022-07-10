@@ -13,6 +13,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@reduxjs/toolkit": "^1.8.3",
+    "antd": "^4.21.5",
     "firebase": "^9.9.0",
     "framer-motion": "^6.4.3",
     "hamburger-react": "^2.5.0",
@@ -26,6 +27,7 @@
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
     "react-toastify": "^9.0.5",
+    "react-yandex-maps": "^4.6.0",
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {

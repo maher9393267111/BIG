@@ -5,6 +5,8 @@ import { wrapper } from "../store/index";
 import Context from '../context/index'
 import React, {useState, useEffect} from 'react';
 import { ChakraProvider } from '@chakra-ui/react'
+import 'antd/dist/antd.css'
+
 function MyApp({ Component, pageProps }) {
 
   const [isSSR, setIsSSR] = useState(true);

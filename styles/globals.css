@@ -24,3 +24,19 @@ a {
 
   @apply bg-slate-500
 }
+
+
+
+
+.MapYandex{
+  width: 99vw;
+  height: 70vh;
+  padding: 20px;
+
+}
+.map_custom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
