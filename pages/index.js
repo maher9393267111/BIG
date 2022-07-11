@@ -6,6 +6,7 @@ import { Box } from '@chakra-ui/react'
 import MapComponent from '../components/maps/map'
 import dynamic from 'next/dynamic';
 import {useState,useEffect} from 'react'
+import { Placemark } from 'react-yandex-maps';
 
 
 
@@ -33,6 +34,22 @@ useEffect(() => {
 }, [])
 
 
+const [formData, setformData] = useState({
+       
+  email: '',
+  password: '',
+  userName: '',
+  fullName: '',
+  phone: '',
+  
+  
+});
+
+const {password,email,userName,fullName,phone} = formData;
+
+
+
+const onChange = e => setformData({...formData, [e.target.name]: e.target.value});
 
 
 
@@ -50,10 +67,10 @@ useEffect(() => {
 
 
 
-<div className=' flex gap-8 w-[69%] mx-auto '>
+<div className=' flex gap-8 w-[69%] mx-auto mt-24 '>
 
 {/* ----lefty image--- */}
-<div className='relative tablet:hidden laptop:block'>
+<div className='relative phone:hidden laptop:block'>
   <img src="https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png" alt="" />
 
 
@@ -66,7 +83,179 @@ useEffect(() => {
 
 {/* -------Right Form---- */}
 <div>
-  form
+  
+{/* ----form--- */}
+<div className='w-[372px] h-[622px] border-2 border-blue-400'>
+
+
+{/* ----all conten wrapper---- */}
+<div className=' container'>
+
+{/* ----insta logo--- */}
+<div className='mt-12 text-center mx-28'>
+<div>
+  <img 
+  className='block w-[175px] h-[52px] '
+  src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
+</div>
+
+
+</div>
+
+
+
+{/* --- all texts wrapper--- */}
+
+<div className=' container w-[277px] ml-12   mt-8'>
+ 
+<div>
+  <p className=' text-center text-[18px] font-semibold'>Sign up to see photos and videos from your friends.</p>
+</div>
+
+
+{/* ---sign in with google---- */}
+<div>
+
+
+<div className='my-4  '>
+  <button className=' bg-black text-white py-2 px-2  w-full rounded-xl'> <img
+  className=' inline-block w-10 h-10 mr-6 rounded-full font-bold'
+  
+  src="https://cdn4.iconfinder.com/data/icons/socialcones/508/Google-256.png" alt="" />Sign In with Google </button>
+</div>
+
+
+
+</div>
+
+
+
+{/* ----register with form--- */}
+<div>
+
+<form>
+
+{/* ---header--- */}
+
+
+<div>
+  <p className='or relative text-center text-xl font-bold'>OR</p>
+</div>
+
+
+<div>
+
+
+{/* ----email or mobile number---- */}
+<div className='my-[6px]'>
+
+<input 
+ onChange= { e => onChange(e) }
+name = 'email'
+
+className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight    focus:outline-slate-400 focus:shadow-outline" id="username" type="text" placeholder="Mobile Or Number"/>
+</div>
+
+
+
+
+
+<div className='my-[6px]'>
+
+<input
+ onChange= { e => onChange(e) }
+name = 'fullName'
+className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight    focus:outline-slate-400 focus:shadow-outline" id="username" type="text" placeholder="fullName"/>
+</div>
+
+<div className='my-[6px]'>
+
+<input
+ onChange= { e => onChange(e) }
+name='userName'
+className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight    focus:outline-slate-400 focus:shadow-outline" id="username" type="text" placeholder="userName"/>
+</div>
+
+
+<div className='my-[6px]'>
+
+<input 
+ onChange= { e => onChange(e) }
+name = 'password'
+className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight    focus:outline-slate-400 focus:shadow-outline" id="username" type="password" placeholder="password"/>
+</div>
+
+
+<div className='my-4 text-center font-semibold'>
+  <h1>
+By signing up, you agree to our Terms , Data Policy and Cookies Policy .</h1>
+</div>
+
+
+
+{/* ----register button---- */}
+
+
+<div>
+
+  <div className=' text-center'>
+    <button
+    type ='submit'
+    className={`  ${ fullName === '' || email === '' || password === '' ? 'opacity-[0.5]' : 'opacity-1'}   bg-blue-500 text-white font-bold p-2 rounded-md  block w-full `}
+    disabled={   fullName === '' || email === ''  || password === ''}
+    
+    >Sign Up</button>
+  </div>
+</div>
+
+
+<div>
+  {password}
+  {email}
+  {userName}
+  {fullName}
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</form>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
 </div>
 
 

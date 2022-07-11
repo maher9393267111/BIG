@@ -40,3 +40,35 @@ a {
   align-items: center;
   padding: 20px;
 }
+
+
+.or::after{
+
+content: '';
+position: absolute;
+height: 2px;
+width: 30%;
+background-color:red;
+top: 50%;
+right: 10%;
+
+
+}
+
+
+
+.or::before{
+
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 30%;
+  background-color:red;
+  top: 50%;
+  left: 10%;
+  
+
+
+
+  
+}
