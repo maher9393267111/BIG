@@ -17,29 +17,23 @@ const [image,setImage] = useState('https://www.instagram.com/static/images/homep
 const images = [
 'https://www.instagram.com/static/images/homepage/screenshots/screenshot1.png/fdfe239b7c9f.png',
 'https://www.instagram.com/static/images/homepage/screenshots/screenshot2.png/4d62acb667fb.png',
-'https://www.instagram.com/static/images/homepage/screenshots/screenshot1.png/fdfe239b7c9f.png',
+'https://www.instagram.com/static/images/homepage/screenshots/screenshot4.png/a4fd825e3d49.png',
 
 
 ]
 
+const [currentImage,setCurrentImage] = useState('https://www.instagram.com/static/images/homepage/screenshots/screenshot4.png/a4fd825e3d49.png')
 
-// change image  every 5s
 useEffect(() => {
- 
-  changeimage()
-  return () => clearInterval(changeimage);
+  const intervalId = setInterval(() => {
+      setCurrentImage(images[Math.floor(Math.random() * images.length)]);
+  }, 1000)
+  
+  return () => clearInterval(intervalId);
 }, [])
 
 
 
- const changeimage = () => {
-
-  setInterval(() => {
-       
-      setImage(images[Math.floor(Math.random() * images.length)]);
-  }
-  , 2000);
- }
 
 
 
@@ -54,7 +48,39 @@ useEffect(() => {
 <div>
 
 
-<img className='h-[200px] w-[200px] my-12' src={image} alt="" />
+
+
+<div className=' flex gap-8 w-[69%] mx-auto '>
+
+{/* ----lefty image--- */}
+<div className='relative tablet:hidden laptop:block'>
+  <img src="https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png" alt="" />
+
+
+<div className='absolute  top-[-15px] left-[154px]'>
+<img className='h-[531px] w-[250px] my-12'  src={currentImage} alt="" />
+</div>
+
+</div>
+
+
+{/* -------Right Form---- */}
+<div>
+  form
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
 
 
 </div>
