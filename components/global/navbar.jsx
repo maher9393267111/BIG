@@ -4,12 +4,19 @@ import { Button, Popover } from 'antd';
 import {useAuth} from '../../context/index';
 const Navbar = () => {
 
-const {userinfo,logout} = useAuth();
+const {userinfo,logout,showModal} = useAuth();
 
 
 const content = (
     <div>
       <p>your chats</p>
+     
+    </div>
+  );
+
+  const post = (
+    <div>
+      <p>Create Post</p>
      
     </div>
   );
@@ -86,6 +93,18 @@ onClick={logout}
     <img
     className='w-12 h-12 rounded-full'
     src="https://cdn4.iconfinder.com/data/icons/navigation-40/24/exit-256.png" alt="" />
+</div>
+
+
+<div>
+<Popover placement="topRight"  content={post}>
+
+    <img
+    onClick={showModal}
+      className='w-12 h-12 rounded-full'
+    src="https://cdn3.iconfinder.com/data/icons/social-media-2487/24/new_post-128.png" alt="" />
+    </Popover>
+    
 </div>
 
 

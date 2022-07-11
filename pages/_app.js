@@ -5,7 +5,9 @@ import { wrapper } from "../store/index";
 import Context from '../context/index'
 import React, {useState, useEffect} from 'react';
 import { ChakraProvider } from '@chakra-ui/react'
+import postModal from '../components/global/postModal';
 import 'antd/dist/antd.css'
+import PostModal from '../components/global/postModal';
 
 function MyApp({ Component, pageProps }) {
 
@@ -26,6 +28,7 @@ function MyApp({ Component, pageProps }) {
     
     
     <Context>
+      <PostModal/>
     
       {/* <Layout>  */}
       <ToastContainer/>

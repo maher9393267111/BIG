@@ -45,6 +45,7 @@ export const useAuth = () => {
 const AuthContext = ({ children }) => {
   const [currentuser, setUser] = useState({});
   const [userinfo, setUserinfo] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
  
   const dispatch = useDispatch();
 
@@ -149,6 +150,21 @@ const AuthContext = ({ children }) => {
 
 
 
+  
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+
 
  
 
@@ -169,7 +185,12 @@ const AuthContext = ({ children }) => {
     signUp,
     signIn,
     logout,
-    signInWithGoogle
+    signInWithGoogle,
+    showModal,
+    handleOk,
+    handleCancel,
+    isModalVisible, 
+    setIsModalVisible
    
    
  
