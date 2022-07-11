@@ -46,7 +46,7 @@ export default function Home() {
   // redired=ct user if he is authenticated
 
   useEffect(() => {
-    if (userinfo) {
+    if (userinfo?.name) {
       router.push("/main");
     }
   }, [userinfo]);

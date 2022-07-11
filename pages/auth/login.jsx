@@ -42,7 +42,7 @@ router.push("/main");
 }
 
 useEffect(() => {
-  if (userinfo) {
+  if (userinfo?.name) {
     router.push("/main");
   }
 }, [userinfo]);
