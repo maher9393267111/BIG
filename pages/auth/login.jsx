@@ -6,23 +6,38 @@ import { Box } from "@chakra-ui/react";
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-
+import {useAuth} from '../../context/index';
+import { useRouter } from "next/router";
+import {toast} from 'react-toastify';
+import {images} from '../../components/global/data';
 import Link from "next/link";
 
-export default function Home() {
-  const [image, setImage] = useState(
-    "https://www.instagram.com/static/images/homepage/screenshots/screenshot1.png/fdfe239b7c9f.png"
-  );
+export default function Login() {
 
-  const images = [
-    "https://www.instagram.com/static/images/homepage/screenshots/screenshot1.png/fdfe239b7c9f.png",
-    "https://www.instagram.com/static/images/homepage/screenshots/screenshot2.png/4d62acb667fb.png",
-    "https://www.instagram.com/static/images/homepage/screenshots/screenshot4.png/a4fd825e3d49.png",
-  ];
+    const {userinfo, logout,signInWithGoogle} = useAuth();
+const router = useRouter();
 
-  const [currentImage, setCurrentImage] = useState(
-    "https://www.instagram.com/static/images/homepage/screenshots/screenshot4.png/a4fd825e3d49.png"
-  );
+const signInWithGoogleFunction = () => {
+
+    signInWithGoogle().then(res => {
+router.push("/main");
+toast.success("Login Successful");
+
+    }).catch(err => {
+        console.log(err);
+        toast.error("Login Failed");
+
+    })
+
+}
+
+
+
+
+
+
+
+  const [currentImage, setCurrentImage] = useState(images[0]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -71,7 +86,7 @@ export default function Home() {
           {/* -------Right Form---- */}
           <div>
             {/* ----form--- */}
-            <div className="w-[372px] h-[477px] border-2 border-blue-400">
+            <div className="w-[372px] h-[477px] border-2 border-[#dbdbdb]">
               {/* ----all conten wrapper---- */}
               <div className=" container">
                 {/* ----insta logo--- */}
@@ -97,7 +112,9 @@ export default function Home() {
                   {/* ---sign in with google---- */}
                   <div>
                     <div className="my-4  ">
-                      <button className=" bg-black text-white py-2 px-2  w-full rounded-xl">
+                      <button
+                  onClick={signInWithGoogleFunction}
+                      className=" bg-black text-white py-2 px-2  w-full rounded-xl">
                         {" "}
                         <img
                           className=" inline-block w-10 h-10 mr-6 rounded-full font-bold"
@@ -187,7 +204,7 @@ export default function Home() {
 
 <div className=" w-[372px] mt-4 mb-6 ">
 
-<div className =  'w-full border-2 border-blue-400 p-6 text-center text-[17px] font-semibold'>
+<div className =  'w-full border-2 border-[#dbdbdb] p-6 text-center text-[17px] font-semibold'>
   <h1>Dont Have an account?  
     
     <Link href='/'><span className="ml-2 text-blue-500 cursor-pointer"> SignUp</span>

@@ -49,13 +49,13 @@ const AuthContext = ({ children }) => {
   const dispatch = useDispatch();
 
 
-  const signUp = async (email, password, name) => {
+  const signUp = async (email, password, fullName,userName) => {
     await createUserWithEmailAndPassword(auth, email, password);
 
     console.log("signUp--------->⚡⚡⚡⚡", email, password, name);
 
     await updateProfile(auth.currentUser, {
-      displayName: name,
+      displayName: fullName,
 
       photoURL:
         "https://cdn4.iconfinder.com/data/icons/office-thick-outline/36/office-14-256.png",
@@ -63,6 +63,7 @@ const AuthContext = ({ children }) => {
 
     await setDoc(doc(db, "users", auth.currentUser.email), {
       watchList: [],
+      userName: userName,
       name: auth.currentUser.displayName,
       role: "user",
       image: auth.currentUser.photoURL,
@@ -99,6 +100,7 @@ const AuthContext = ({ children }) => {
 
     await setDoc(doc(db, "users", auth.currentUser.email), {
       watchList: [],
+      
       name: auth.currentUser.displayName,
       role: "user",
       image: auth.currentUser.photoURL,
