@@ -8,48 +8,48 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { Placemark } from "react-yandex-maps";
 import Link from "next/link";
-import { useAuth } from '../context';
-import {useRouter} from 'next/router';
-import {images} from '../components/global/data';
-import {toast} from 'react-toastify';
+import { useAuth } from "../context";
+import { useRouter } from "next/router";
+import { images } from "../components/global/data";
+import { toast } from "react-toastify";
 export default function Home() {
+  const { userinfo, signInWithGoogle, signUp } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState("");
 
-  const {userinfo, signInWithGoogle, signUp} = useAuth();
-const router = useRouter();
+  const signInWithGoogleFunction = () => {
+    signInWithGoogle()
+      .then((res) => {
+        router.push("/main");
+        toast.success("Login with Google Successful");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Login with Google Failed");
+      });
+  };
 
-const signInWithGoogleFunction = () => {
+  const signForm = (e) => {
+    e.preventDefault();
 
-  signInWithGoogle().then(res => {
-router.push("/main");
-toast.success("Login with Google Successful");
+    signUp(email, password, fullName, userName)
+      .then((res) => {
+        toast.success("Registered Successful");
+        router.push("/main");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setError(err.message);
+      });
+  };
 
-  }).catch(err => {
-      console.log(err);
-      toast.error("Login with Google Failed");
+  // redired=ct user if he is authenticated
 
-  })
-
-}
-
-
-
-const signForm = (e) => {
-  e.preventDefault();
-
-  signUp(email, password,fullName,userName).then(res => {
-
-toast.success("Registered Successful");
-
-  }).catch(err => {
-
-toast.error(err.message);
-  })
-
-}
-
-
-
-  
+  useEffect(() => {
+    if (userinfo) {
+      router.push("/main");
+    }
+  }, [userinfo]);
 
   const [currentImage, setCurrentImage] = useState(images[0]);
 
@@ -71,9 +71,10 @@ toast.error(err.message);
 
   const { password, email, userName, fullName, phone } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
-
+    setError("");
+  };
   return (
     <div className={styles.container}>
       <NextHead
@@ -129,9 +130,9 @@ toast.error(err.message);
                   <div>
                     <div className="my-4  ">
                       <button
-                         onClick={signInWithGoogleFunction}
-                      
-                      className=" bg-black text-white py-2 px-2  w-full rounded-xl">
+                        onClick={signInWithGoogleFunction}
+                        className=" bg-black text-white py-2 px-2  w-full rounded-xl"
+                      >
                         {" "}
                         <img
                           className=" inline-block w-10 h-10 mr-6 rounded-full font-bold"
@@ -212,7 +213,7 @@ toast.error(err.message);
                         <div>
                           <div className=" text-center">
                             <button
-                            onClick ={signForm }
+                              onClick={signForm}
                               type="submit"
                               className={`  ${
                                 fullName === "" ||
@@ -229,6 +230,12 @@ toast.error(err.message);
                             >
                               Sign Up
                             </button>
+
+                            <div>
+                              <p className=" text-red-400 font-bold my-4 text-sm">
+                                {error}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -238,34 +245,23 @@ toast.error(err.message);
               </div>
             </div>
 
+            {/* ----- if you have an account login page go---- */}
 
-{/* ----- if you have an account login page go---- */}
-
-<div>
-
-<div className=" w-[372px] mt-4 mb-6 ">
-
-<div className =  'w-full border-2 border-[#dbdbdb] p-6 text-center text-[17px] font-semibold'>
-  <h1>Have an account?  
-    
-    <Link href='/auth/login'><span className="ml-2 text-blue-500 cursor-pointer"> Log in</span>
-    </Link>
-    
-    </h1>
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
+            <div>
+              <div className=" w-[372px] mt-4 mb-6 ">
+                <div className="w-full border-2 border-[#dbdbdb] p-6 text-center text-[17px] font-semibold">
+                  <h1>
+                    Have an account?
+                    <Link href="/auth/login">
+                      <span className="ml-2 text-blue-500 cursor-pointer">
+                        {" "}
+                        Log in
+                      </span>
+                    </Link>
+                  </h1>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ import Link from "next/link";
 
 export default function Login() {
 
-    const {userinfo, logout,signInWithGoogle} = useAuth();
+    const {userinfo,signIn ,signInWithGoogle} = useAuth();
 const router = useRouter();
 
 const signInWithGoogleFunction = () => {
@@ -31,6 +31,21 @@ toast.success("Login Successful");
 
 }
 
+
+const loginFunction = (e) =>{
+
+e.preventDefault();
+signIn(email,password)
+router.push("/main");
+
+
+}
+
+useEffect(() => {
+  if (userinfo) {
+    router.push("/main");
+  }
+}, [userinfo]);
 
 
 
@@ -172,6 +187,7 @@ toast.success("Login Successful");
                         <div>
                           <div className=" text-center">
                             <button
+                            onClick={loginFunction}
                               type="submit"
                               className={`  ${
                                 
