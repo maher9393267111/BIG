@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import  Link from 'next/link';
 import { useState,useEffect } from 'react';
+import {Button} from '@chakra-ui/react'
 import {
     useCollectionData,
     useDocumentData,
@@ -25,10 +26,86 @@ const Profile = ({user}) => {
         "
       />
 
+<div>
+
+<div>
 
 
 
-            <h1>{user.id}</h1>
+{/* ----user  cover and his image section ----- */}
+
+<div>
+
+<div className='  bg-cover h-[350px] relative   '>
+
+{/* -----user image--- */}
+
+<div  className='absolute phone:bottom-[-50px] laptop:bottom-[-70px]  bg-slate-50 rounded-full ml-16'>
+
+<img
+className=' laptop:w-[9rem] laptop:h-[9rem] phone:h-[6rem] phone:w-[6rem]  rounded-full  hover:'
+src={user?.image} alt="" />
+
+</div>
+
+
+</div>
+
+
+
+{/* ----- follow bottn---- */}
+
+
+<div className=' mt-6 mb-6 text-right mr-12'>
+<Button 
+width={'136px'}
+colorScheme='messenger'>Follow</Button>
+</div>
+
+
+{/* -----user inf---- */}
+
+
+<div className='ml-8 mt-12'>
+
+<div>
+  <h1 className='text-2xl font-bold'>{user.name}</h1>
+
+<h1 className='font-bold text-2xl my-2'> {user.email}</h1>
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+           
             
         </Layout>
     );

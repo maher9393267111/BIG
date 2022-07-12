@@ -58,9 +58,9 @@ const router = useRouter();
     await createUserWithEmailAndPassword(auth, email, password)
 
 
-    
 
-    console.log("signUp--------->⚡⚡⚡⚡", email, password, name);
+
+   // console.log("signUp--------->⚡⚡⚡⚡", email, password, name);
 
     await updateProfile(auth.currentUser, {
       displayName: fullName,

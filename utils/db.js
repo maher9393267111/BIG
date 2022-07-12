@@ -152,7 +152,7 @@ console.log("specefic user Posts----->",data);
 
 
 export const AllUsers= (user) => {
-  console.log("user is 📍  📍  📍 ------>",user?.name);
+ // console.log("user is 📍  📍  📍 ------>",user?.name);
    
   return getDocs(query(collection(db, "users"),  
   //  all users except auth user

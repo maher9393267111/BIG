@@ -49,8 +49,8 @@ module.exports = {
         '88vh': '88vh',
       },
       backgroundImage: {
-        'blurred-img':
-          "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsaaJ7s4lqcBF4IDROVPzrlL5fexcwRmDlnuEYQenWTt1DejFY5kmYDref2a0Hp2eE4aw&usqp=CAU')",
+        'cover':
+          "url('https://newevolutiondesigns.com/images/freebies/black-facebook-cover-10.jpg')",
       },
     },
   },

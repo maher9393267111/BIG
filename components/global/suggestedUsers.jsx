@@ -19,7 +19,7 @@ useEffect(() => {
 
     AllUsers(userinfo).then(res => {
         setAllusers(res);
-        console.log("USERS---- RESPONSE-->",res);
+      //  console.log("USERS---- RESPONSE-->",res);
     }).catch(err => {
         console.log(err);
     })
@@ -30,7 +30,7 @@ else if (userinfo.name === undefined ) {
     console.log(' 🔪🔪🔪🔪🔪 Not-----> ---> Auth user fetch onother users')
     AllUsers().then(res => {
         setAllusers(res);
-        console.log("USERS---- RESPONSE-->",res);
+     //   console.log("USERS---- RESPONSE-->",res);
     }).catch(err => {
         console.log(err);
     })
@@ -67,7 +67,7 @@ else if (userinfo.name === undefined ) {
                 />
               </div>
 
-              <div className='hidden xl:block'>
+              <div className=' phone:text-[10px] tablet:text-[17px] xl:block'>
                 <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
                   {user.name.replace(/\s+/g, '')}{' '}
                   <GoVerified className='text-blue-400' />

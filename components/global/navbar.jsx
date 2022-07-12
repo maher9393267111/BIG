@@ -23,6 +23,19 @@ const content = (
   );
 
 
+  const userprofile = (
+    <div>
+      <p>go to your Profile</p>
+     
+    </div>
+  );
+
+  const logOutContent = (
+    <div>
+      <p>Logout</p>
+    </div>
+  )
+
 
 
     return (
@@ -39,7 +52,7 @@ const content = (
 <div>
 
 <Link href='/main'><div>
-    <img src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
+    <img className=' cursor-pointer' src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
 </div>
 
 </Link>
@@ -66,11 +79,15 @@ const content = (
 
 
 <div className=' flex gap-4'>
+
 <Link href={`/profile/${userinfo?.email}`}>
+<Popover placement="topRight"  content={userprofile}>
 <img
- className='w-14 h-14'
+ className='w-14 h-14 cursor-pointer'
 src={userinfo?.image} alt="" />
+</Popover>
 </Link>
+
 
 
 
@@ -81,7 +98,7 @@ src={userinfo?.image} alt="" />
 
 <Popover placement="topRight"  content={content}>
         {/* <Button> */}
-             <img className='w-12 h-12 rounded-full' src="https://cdn2.iconfinder.com/data/icons/buno-ui-interface/32/__chat_messagem_bubble-256.png" alt="" />
+             <img className='w-12 h-12 rounded-full cursor-pointer' src="https://cdn2.iconfinder.com/data/icons/buno-ui-interface/32/__chat_messagem_bubble-256.png" alt="" />
         
         {/* </Button> */}
       </Popover>
@@ -90,22 +107,24 @@ src={userinfo?.image} alt="" />
 
 {/* ----logout button-----  */}
 
+<Popover placement="topRight"  content={logOutContent}>
 <div
 onClick={logout}
 
 >
     <img
-    className='w-12 h-12 rounded-full'
+    className='w-12 h-12 rounded-full cursor-pointer'
     src="https://cdn4.iconfinder.com/data/icons/navigation-40/24/exit-256.png" alt="" />
 </div>
 
+</Popover>
 
 <div>
 <Popover placement="topRight"  content={post}>
 
     <img
     onClick={showModal}
-      className='w-12 h-12 rounded-full'
+      className='w-12 h-12 rounded-full cursor-pointer'
     src="https://cdn3.iconfinder.com/data/icons/social-media-2487/24/new_post-128.png" alt="" />
     </Popover>
     
