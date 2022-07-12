@@ -5,6 +5,8 @@ import TopicsNav from '../components/global/topicsNav';
 import { AllPosts,PostsByTopic} from '../utils/db'
 import { useState,useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Sidebar from '../components/main/sidebar';
+import Posts from '../components/main/posts';
 const Main = () => {
 
     const [posts, setPosts] = useState([]);
@@ -69,16 +71,17 @@ const Main = () => {
 
 <div className=' col-span-3'>
 
-suggested users
+<Sidebar/>
 </div>
 
 
 {/* ------posts section---- */}
 
 <div className=' col-span-9'>
-    all posts
 
-    {posts?.length}
+<Posts posts={posts}/>
+
+
 
 </div>
 
