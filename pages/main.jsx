@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../components/global/layout';
 import NextHead from '../components/global/NextHead';
+import TopicsNav from '../components/global/topicsNav';
 const Mai = () => {
     return (
         <Layout>
@@ -9,7 +10,9 @@ const Mai = () => {
         metaDescription="Audiophile is the premier store for high end headphones, earphones, speakers, and accessories. Browse our collection."
       />
 
-
+<div>
+    <TopicsNav />
+</div>
 
 
         <div>
@@ -20,3 +23,6 @@ const Mai = () => {
 }
 
 export default Mai;
+
+
+
