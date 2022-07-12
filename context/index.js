@@ -78,7 +78,8 @@ const router = useRouter();
       email: auth.currentUser.email,
       password: password,
       history: [],
-      createdAt: serverTimestamp(),
+      createdAt: Date.now(),
+      // serverTimestamp(),
 
       cart: [],
     
@@ -117,6 +118,7 @@ message.success('Welcome to the my site');
       image: auth.currentUser.photoURL,
       email: auth.currentUser.email,
       password: "",
+      createdAt: serverTimestamp(),
 
       cart: [],
       posts: [],

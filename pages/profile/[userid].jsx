@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Moment from "react-moment";
 import  Link from 'next/link';
 import { useState,useEffect } from 'react';
 import {Button} from '@chakra-ui/react'
@@ -16,6 +17,11 @@ import  Layout from '../../components/global/layout';
 
 
 const Profile = ({user}) => {
+  console.log('date------>',user.createdAt);
+
+const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
+
+
     return (
         <Layout>
 
@@ -68,11 +74,21 @@ colorScheme='messenger'>Follow</Button>
 
 <div className='ml-8 mt-12'>
 
-<div>
-  <h1 className='text-2xl font-bold'>{user.name}</h1>
+<div className=' '>
+  <h1 className='text-xl font-semibold tg'>{user.name}</h1>
 
-<h1 className='font-bold text-2xl my-2'> {user.email}</h1>
+<h1 className='font-semibold text-xl my-2 tg'> {user.email}</h1>
 
+
+
+
+<div className='pb-22'>
+  <h2> 
+    <img src="inline-block h-10 h-10" alt="" />
+ Joined At    {currentDate}
+    
+     </h2>
+</div>
 
 
 
