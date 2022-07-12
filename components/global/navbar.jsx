@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button, Popover } from 'antd';
 import {useAuth} from '../../context/index';
+
 const Navbar = () => {
 
 const {userinfo,logout,showModal} = useAuth();
@@ -63,10 +64,13 @@ const content = (
 
 {/* ---user image--- */}
 
+
 <div className=' flex gap-4'>
+<Link href={`/profile/${userinfo?.email}`}>
 <img
  className='w-14 h-14'
 src={userinfo?.image} alt="" />
+</Link>
 
 
 
