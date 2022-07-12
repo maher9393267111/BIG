@@ -151,8 +151,12 @@ console.log("specefic user Posts----->",data);
 
 
 
-export const AllUsers= () => {
-  return getDocs(query(collection(db, "users"),    
+export const AllUsers= (user) => {
+  console.log("user is 📍  📍  📍 ------>",user?.name);
+   
+  return getDocs(query(collection(db, "users"),  
+  //  all users except auth user
+    user?.name !== undefined ? where("name", "!=", user?.name) : where("name", "!=", "")
  // orderBy('orderby', "desc")
   )).then((querySnapshot) => {
 

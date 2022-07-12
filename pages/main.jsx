@@ -64,20 +64,17 @@ const Main = () => {
 
 {/* ----flex   suggested users and posts section -- */}
 
-           <div  className='grid grid-cols-12 gap-12 mx-4 '>
+           <div  className='  mx-4 '>
 
 {/* ----- suggested users section ---- */}
 
 
-<div className=' col-span-3'>
 
-<Sidebar/>
-</div>
 
 
 {/* ------posts section---- */}
 
-<div className=' col-span-9'>
+<div className=' '>
 
 <Posts posts={posts}/>
 

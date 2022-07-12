@@ -10,17 +10,27 @@ import {
 import safeJsonStringify from "safe-json-stringify";
 //import Tab from '../../components/user/Tab';
 import { db } from "../../firebase";
-
-
+import NextHead from '../../components/global/NextHead';
+import  Layout from '../../components/global/layout';
 
 
 const Profile = ({user}) => {
     return (
-        <div>
+        <Layout>
+
+
+<NextHead
+        title="profile"
+        metaDescription="user profile page here
+        "
+      />
+
+
+
 
             <h1>{user.id}</h1>
             
-        </div>
+        </Layout>
     );
 }
 
