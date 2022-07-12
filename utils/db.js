@@ -59,7 +59,7 @@ export const createPost = async (postdata) => {
 
 
 export const AllPosts= () => {
-    return getDocs(query(collection(db, "posts"),    
+    return getDocs(query(collection(db, "InstaPosts"),    
    // orderBy('orderby', "desc")
     )).then((querySnapshot) => {
   
@@ -82,7 +82,7 @@ export const AllPosts= () => {
   
 
 export const PostsByTopic= (topic) => {
-    return getDocs(query(collection(db, "posts"), 
+    return getDocs(query(collection(db, "InstaPosts"), 
     where("topic", "==", topic)   
    // orderBy('orderby', "desc")
     )).then((querySnapshot) => {

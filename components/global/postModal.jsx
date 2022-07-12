@@ -12,6 +12,7 @@ import {
     getStorage,
     uploadBytes,
     deleteObject,
+   
   } from "firebase/storage";
   import {
     useCollectionData,
@@ -28,6 +29,7 @@ import {
   import { FaCloudUploadAlt } from 'react-icons/fa';
 import {useAuth} from '../../context/index';
 import { info } from 'autoprefixer';
+
 const PostModal = () => {
 
    
@@ -231,7 +233,7 @@ const handlePost = async () => {
       postedbyImage: userinfo.image,
       postedbyId: userinfo.id,
         caption: caption,
-        category: category,
+        topic: category,
        
         videos: videos || '',
         image: image || '',

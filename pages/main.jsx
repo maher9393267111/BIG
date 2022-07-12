@@ -2,7 +2,49 @@ import React from 'react';
 import Layout from '../components/global/layout';
 import NextHead from '../components/global/NextHead';
 import TopicsNav from '../components/global/topicsNav';
-const Mai = () => {
+import { AllPosts,PostsByTopic} from '../utils/db'
+import { useState,useEffect } from 'react';
+import { useRouter } from 'next/router';
+const Main = () => {
+
+    const [posts, setPosts] = useState([]);
+
+    // current query
+    const router = useRouter();
+    const { topic } = router.query;
+    console.log('🌟🌟🌟--->',topic);
+
+
+
+    useEffect(() => {
+
+        if (topic) {
+        
+          PostsByTopic(topic).then(posts => {
+            setPosts(posts);
+            console.log('🌟🌟🌟ALLPOSTS--->',posts);
+          }).catch(err => {
+            console.log(err);
+          }).finally(() => {
+            console.log('finally');
+          }
+          )
+        }
+        
+        if (topic ===  undefined  || topic === null) {
+        
+        
+          AllPosts().then(res => {
+            setPosts(res)
+            console.log('res-----💠💠💠->',posts)
+          } )
+        
+        }
+        }, [topic])
+
+
+
+
     return (
         <Layout>
   <NextHead
@@ -15,14 +57,46 @@ const Mai = () => {
 </div>
 
 
-        <div>
-           <h1>main page</h1> 
+        <div className=' my-6'>
+           
+
+{/* ----flex   suggested users and posts section -- */}
+
+           <div  className='grid grid-cols-12 gap-12 mx-4 '>
+
+{/* ----- suggested users section ---- */}
+
+
+<div className=' col-span-3'>
+
+suggested users
+</div>
+
+
+{/* ------posts section---- */}
+
+<div className=' col-span-9'>
+    all posts
+
+    {posts?.length}
+
+</div>
+
+
+
+           </div>
+
+
+
+
+
+
         </div>
         </Layout>
     );
 }
 
-export default Mai;
+export default Main;
 
 
 
