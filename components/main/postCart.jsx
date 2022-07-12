@@ -1,15 +1,15 @@
 import React from 'react';
-
+import VideoCard from './videoCard';
 const PostCart = ({post}) => {
     return (
-        <div className='my-4 mx-4'>
+        <div className='my-4 mx-4 pb-20'>
 
 {/* -----if image show image else sitis video show video--- */}
 
 
 { post?.image?.image !== '' ? (
 
-            <div className='w-full h-[300px] relative'>
+            <div className='w-full phone:h-[355px] tablet:h-[422px] laptop:h-[500px]  relative'>
                 <img className='w-full h-full cursor-pointer rounded-lg object-cover' src={post.image && post.image.image} alt="" />
 
 
@@ -17,7 +17,7 @@ const PostCart = ({post}) => {
 
 <div className=' absolute'>
 
-<p> {post?.topic}</p>
+<p className='border-2 font-bold p-2 w-28 bg-blue-600  text-white rounded-full text-center '> {post?.topic}</p>
 
 
 </div>
@@ -30,7 +30,7 @@ const PostCart = ({post}) => {
 (
 
 <div>
-    itis video
+    <VideoCard post={post}/>
 </div>
 
 

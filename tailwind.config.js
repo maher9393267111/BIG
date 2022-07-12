@@ -13,7 +13,7 @@ module.exports = {
         // sm: '240px',
         // md: '768px',
         // "ipad": '800px',
-        // lg: '1024px',
+        //  lg: '1024px',
         // xl: '1280px',
         // "2xl": "1440px",
         'phone': '440px',

@@ -12,7 +12,7 @@ const Posts = ({posts}) => {
 {/* ---grid of posts--- */}
 
 
-<div className='w-full grid laptop:grid-cols-3 phone:grid-cols-2'>
+<div className='w-full'>
 
 
 { posts.length > 0  ? 

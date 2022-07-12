@@ -27,6 +27,7 @@ import {
   where,
   FieldPath,
   updateDoc,
+  serverTimestamp
 } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -36,6 +37,8 @@ import { auth, db } from "../firebase";
 import { useDispatch } from "react-redux";
 import {setProducts,     setName  } from "../store/index";
 import {toast} from 'react-toastify';
+import {message} from 'antd';
+import {useRouter} from 'next/router';
 const authContext = createContext();
 
 export const useAuth = () => {
@@ -46,12 +49,16 @@ const AuthContext = ({ children }) => {
   const [currentuser, setUser] = useState({});
   const [userinfo, setUserinfo] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
+
  
   const dispatch = useDispatch();
-
+const router = useRouter();
 
   const signUp = async (email, password, fullName,userName) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, email, password)
+
+
+    
 
     console.log("signUp--------->⚡⚡⚡⚡", email, password, name);
 
@@ -71,6 +78,7 @@ const AuthContext = ({ children }) => {
       email: auth.currentUser.email,
       password: password,
       history: [],
+      createdAt: serverTimestamp(),
 
       cart: [],
     
@@ -80,11 +88,13 @@ const AuthContext = ({ children }) => {
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password).then(() => {
+router.push('/main');
+message.success('Welcome to the my site');
 
-      toast.success("Successfully Signed In");
     })
     .catch(error => {
-      toast.error(error.message);
+      router.push("/auth/login");
+      message.error(error.message);
     })
   };
 

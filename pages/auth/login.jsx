@@ -3,14 +3,16 @@ import NextHead from "../../components/global/NextHead";
 import Image from "next/image";
 
 import { Box } from "@chakra-ui/react";
+import {message} from 'antd';
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import {useAuth} from '../../context/index';
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import {toast} from 'react-toastify';
 import {images} from '../../components/global/data';
 import Link from "next/link";
+
 
 export default function Login() {
 
@@ -36,7 +38,8 @@ const loginFunction = (e) =>{
 
 e.preventDefault();
 signIn(email,password)
-router.push("/main");
+
+
 
 
 }
