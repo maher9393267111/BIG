@@ -89,8 +89,18 @@ const router = useRouter();
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password).then(() => {
-router.push('/main');
-message.success('Welcome to the my site');
+
+updateDoc(doc(db, "users", auth.currentUser.email), {
+
+  lastLogin: Date.now(),
+  isOnline: true,
+  isLoggedIn: true,
+  isLoggedOut: false,
+})
+
+
+ router.push('/main');
+ message.success('Welcome to the my site');
 
     })
     .catch(error => {
@@ -118,7 +128,11 @@ message.success('Welcome to the my site');
       image: auth.currentUser.photoURL,
       email: auth.currentUser.email,
       password: "",
-      createdAt: serverTimestamp(),
+      createdAt:Date.now(),
+      isOnline: true,
+      isLoggedIn: true,
+      isLoggedOut: false,
+      //serverTimestamp(),
 
       cart: [],
       posts: [],
@@ -131,7 +145,16 @@ message.success('Welcome to the my site');
   // signout
 
   const logout = () => {
-    console.log("logout");
+    console.log("logout")
+updateDoc(doc(db, "users", auth.currentUser.email), {
+
+  isOnline: false,
+  isLoggedIn: false,
+  isLoggedOut: true,
+  lastLogout: Date.now(),
+  lastLogin: Date.now(),
+})
+
     setUser({});
     setUserinfo({});
     signOut(auth);

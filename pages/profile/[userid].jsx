@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Moment from "react-moment";
 import  Link from 'next/link';
 import { useState,useEffect } from 'react';
-import {Button} from '@chakra-ui/react'
+import {Button, Popover} from '@chakra-ui/react'
 import {
     useCollectionData,
     useDocumentData,
@@ -21,6 +21,15 @@ const Profile = ({user}) => {
 
 const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
 
+const chatme = (
+  <div>
+
+    <p>Go to Chat</p>
+   
+  </div>
+);
+
+
 
     return (
         <Layout>
@@ -32,7 +41,7 @@ const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
         "
       />
 
-<div>
+<div className='mb-20 pb-20'>
 
 <div>
 
@@ -62,10 +71,28 @@ src={user?.image} alt="" />
 {/* ----- follow bottn---- */}
 
 
-<div className=' mt-6 mb-6 text-right mr-12'>
+<div className=' mt-6 mb-6 text-right mr-12  '>
+
+
+
 <Button 
 width={'136px'}
 colorScheme='messenger'>Follow</Button>
+
+{/* ---chat buton--- */}
+
+<div className=' text-right'>
+<Popover placement="topRight"  content={chatme}>
+  <Link href={`/chat/${user?.id}`}>
+  <p className=' relative -top-6'>
+    <img className='w-8 h-8 rounded-full mx-2 cursor-pointer' src="https://cdn3.iconfinder.com/data/icons/instagram-latest/1000/Instagram_send_message-256.png" alt="" />
+  </p>
+  </Link>
+</Popover>
+</div>
+
+
+
 </div>
 
 
@@ -82,12 +109,42 @@ colorScheme='messenger'>Follow</Button>
 
 
 
-<div className='pb-22'>
-  <h2> 
-    <img src="inline-block h-10 h-10" alt="" />
+<div className='pb-22 mt-2'>
+  <h2 className=' tg font-semibold my-4'>  
+    <img className="inline-block h-6 w-6 mr-2"
+    src="https://cdn0.iconfinder.com/data/icons/basic-thin-ios/512/appointment_calendar_coming_soon_daily_date_datepicker_day_deadline_estimate_event_future_meeting_month_dates-256.png"
+    alt="" />
  Joined At    {currentDate}
     
      </h2>
+
+
+{/* ------followers  and following ---- */}
+
+<div>
+
+<div className='text-xl flex gap-12 tg font-semibold'>
+
+<div>
+  <p className=''>Following</p>
+</div>
+
+
+<div>
+  <p>Followers</p>
+</div>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
 </div>
 
 

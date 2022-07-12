@@ -4,6 +4,7 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getAnalytics, logEvent } from "firebase/analytics"
+import { getMessaging, onMessage } from "firebase/messaging";
 //import firebase from "firebase/app";
 const firebaseConfig =  initializeApp({
    
@@ -65,3 +66,11 @@ export {
   getDownloadURL,
   uploadBytes,
 }
+
+
+
+// const messaging = getMessaging();
+// onMessage(messaging, (payload) => {
+//   console.log("Message received. ", payload);
+//   // ...
+// });
