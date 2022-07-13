@@ -14,6 +14,7 @@ export default function BottomBar({ user, chatId }) {
     await addDoc(collection(db, `chats/${chatId}/messages`), {
       text: input,
       sender: user.email,
+    //   reciver:onotheruser.email,
       timestamp: serverTimestamp(),
     });
 

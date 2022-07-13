@@ -224,3 +224,12 @@ export const ExistChat= (me,user) => {
    });
  }
  
+
+
+ export const findOnotherUserData= async(id) => {
+  const userpath = doc(db, "users", `${id}`);
+  const useris = await (await getDoc(userpath)).data();
+  console.log("useris☢️☢️☢️☢️------>",useris,'id:::::',id);
+  return useris;
+
+}
