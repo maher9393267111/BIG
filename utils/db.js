@@ -151,6 +151,9 @@ console.log("specefic user Posts----->",data);
 
 
 
+
+
+
 export const AllUsers= (user) => {
  // console.log("user is 📍  📍  📍 ------>",user?.name);
    
@@ -172,4 +175,18 @@ export const AllUsers= (user) => {
 console.log("allUSers ------>",data);
     return  data;
   });
+}
+
+
+
+
+// handle useschat
+
+
+export const handleChatusers= async(id) => {
+  const userpath = doc(db, "users", `${id}`);
+  const useris = await (await getDoc(userpath)).data();
+  console.log("useris☢️☢️☢️☢️------>",useris,'id:::::',id);
+  return useris;
+
 }

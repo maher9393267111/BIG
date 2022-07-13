@@ -77,3 +77,13 @@ right: 10%;
 .tg{
   @apply text-[#536471]
 }
+
+
+
+.dot {
+  height: 14px;
+  width: 14px;
+
+  border-radius: 50%;
+  display: inline-block;
+}

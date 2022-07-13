@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+
 import Moment from "react-moment";
 import  Link from 'next/link';
 import { useState,useEffect } from 'react';
@@ -8,19 +8,22 @@ import {
     useCollectionData,
     useDocumentData,
   } from "react-firebase-hooks/firestore";
-  import { query, orderBy, collection, doc,getDoc} from "firebase/firestore";
+  import { query, orderBy, collection, doc,getDoc,addDoc,serverTimestamp} from "firebase/firestore";
 import safeJsonStringify from "safe-json-stringify";
 //import Tab from '../../components/user/Tab';
 import { db } from "../../firebase";
 import NextHead from '../../components/global/NextHead';
 import  Layout from '../../components/global/layout';
-
+import { getAdditionalUserInfo } from 'firebase/auth';
+import { useAuth } from '../../context/index';
+import {useRouter} from 'next/router';
 
 const Profile = ({user}) => {
   console.log('date------>',user.createdAt);
 
+  const {userinfo, handleOnotherUser} = useAuth();
 const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
-
+const router = useRouter();
 const chatme = (
   <div>
 
@@ -28,6 +31,26 @@ const chatme = (
    
   </div>
 );
+
+
+const newChat = async () => {
+
+
+
+
+   const chat =  await  addDoc(collection(db, "chats"), {
+      users: [userinfo.email, user.email],
+      timestamp: serverTimestamp(),
+    });
+
+    // then redirect to created chat
+    router.push(`/chat?chatid=${chat.id}`);
+  
+};
+
+
+
+
 
 
 
@@ -81,15 +104,21 @@ colorScheme='messenger'>Follow</Button>
 
 {/* ---chat buton--- */}
 
+{ userinfo.name !== undefined && userinfo.name !==user.name &&  
+
+
 <div className=' text-right'>
 <Popover placement="topRight"  content={chatme}>
-  <Link href={`/chat/${user?.id}`}>
-  <p className=' relative -top-6'>
+  {/* <Link href={`/chat/${user?.id + userinfo?.id}`}> */}
+  <p 
+  onClick={newChat }
+  className=' relative -top-6'>
     <img className='w-8 h-8 rounded-full mx-2 cursor-pointer' src="https://cdn3.iconfinder.com/data/icons/instagram-latest/1000/Instagram_send_message-256.png" alt="" />
   </p>
-  </Link>
+  {/* </Link> */}
 </Popover>
 </div>
+}
 
 
 

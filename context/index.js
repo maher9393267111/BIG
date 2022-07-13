@@ -49,7 +49,7 @@ const AuthContext = ({ children }) => {
   const [currentuser, setUser] = useState({});
   const [userinfo, setUserinfo] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+const [onotherUser, setOnotherUser] = useState(null);
  
   const dispatch = useDispatch();
 const router = useRouter();
@@ -201,6 +201,11 @@ updateDoc(doc(db, "users", auth.currentUser.email), {
 
 
 
+  const handleOnotherUser = (userdata) => {
+    setOnotherUser(userdata);
+    console.log("handleOnotherUser", userdata);
+
+  }
  
 
 
@@ -225,7 +230,10 @@ updateDoc(doc(db, "users", auth.currentUser.email), {
     handleOk,
     handleCancel,
     isModalVisible, 
-    setIsModalVisible
+    setIsModalVisible,
+    handleOnotherUser,
+    onotherUser,
+    setOnotherUser,
    
    
  
