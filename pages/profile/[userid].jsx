@@ -25,7 +25,7 @@ import Layout from "../../components/global/layout";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useAuth } from "../../context/index";
 import { useRouter } from "next/router";
-import { ExistChat } from "../../utils/db";
+import { ExistChat,Follow } from "../../utils/db";
 import { message } from "antd";
 import UserLayout from "../../components/user/userLayout";
 
@@ -79,6 +79,18 @@ const Profile = ({ user }) => {
     });
   };
 
+
+// make follow
+
+const makeFollow = async (e) => {
+
+  e.preventDefault();
+  Follow(userinfo,user)
+
+}
+
+
+
   return (
     <UserLayout
     userid={user.id}
@@ -109,7 +121,10 @@ const Profile = ({ user }) => {
             {/* ----- follow bottn---- */}
 
             <div className=" mt-6 mb-6 text-right mr-12  ">
-              <Button width={"136px"} colorScheme="messenger">
+              <Button
+              onClick={makeFollow }
+              cursor="pointer"
+              width={"136px"} colorScheme="messenger">
                 Follow
               </Button>
 

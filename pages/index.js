@@ -12,6 +12,7 @@ import { useAuth } from "../context";
 import { useRouter } from "next/router";
 import { images } from "../components/global/data";
 import { toast } from "react-toastify";
+import { message } from "antd";
 export default function Home() {
   const { userinfo, signInWithGoogle, signUp } = useAuth();
   const router = useRouter();
@@ -34,11 +35,11 @@ export default function Home() {
 
     signUp(email, password, fullName, userName)
       .then((res) => {
-        toast.success("Registered Successful");
+        message.success("Sign Up Successful");
         router.push("/main");
       })
       .catch((err) => {
-        toast.error(err.message);
+        message.error(err.message);
         setError(err.message);
       });
   };

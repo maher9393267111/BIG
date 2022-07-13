@@ -34,6 +34,7 @@ import {
     useDocumentData,
   } from "react-firebase-hooks/firestore";
 import { toast } from "react-toastify";
+import { message } from "antd";
 
 
 
@@ -265,3 +266,92 @@ export const userChats= (user) => {
    });
  }
  
+
+ // follow user
+
+
+ 
+export const Follow = async (userinfo, userdata) => {
+  try {
+    // add users collection to group collection
+    // when im follow the user add to my folloing collecction
+
+    await setDoc(doc(db, "users", userinfo.id, "following", userdata?.email), {
+      name: userdata.name,
+      email: userdata.email,
+      image: userdata.image,
+      id: userdata.id,
+      followedAt: serverTimestamp(),
+    })
+    message.success("You are now following this user");
+ 
+// and add to my followers collection in onother user
+
+
+await setDoc(doc(db, "users", userdata.id, "followers", userinfo?.email), {
+  name: userinfo.name,
+  email: userinfo.email,
+  image: userinfo.image,
+  id: userinfo.id,
+  followedAt: serverTimestamp(),
+})
+
+
+
+
+  } catch (error) {
+    message.error(error.message);
+  }
+};
+
+
+
+export  const unfollow = async (userinfo, userdata) => {
+
+  // elete it from group collection and from users collection
+  
+  try {
+  
+   
+    const userDoc = doc(db, "users", userinfo.id, "following",userdata.id );
+    await deleteDoc(userDoc);
+    message.success("User Deleted From following");
+
+    const onotherDoc = doc(db, "users", userdata.id, "followers",userinfo.id );
+    await deleteDoc(onotherDoc);
+    message.success("User Deleted From foloowers");
+
+  }
+  
+
+    catch (error) {
+  
+     message.error(error.message);
+    }
+  
+  
+  
+  }
+  
+
+  // ----user all following onother user page----
+
+
+const  alfollowing = async (userid) => {
+
+
+
+}
+
+
+
+
+
+
+
+  // user all followers onother user page
+
+  const allfollowers = async (userid) => {
+
+
+  }
