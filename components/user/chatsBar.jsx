@@ -9,27 +9,7 @@ const ChatsBar = () => {
 
   const { userinfo } = useAuth();
 
-  const onotheruserdata = () => {
-    AllChats.map((chat) => {
-      return (
-        <div>
-          <div>
-            {chat.usersData
-              .filter((user) => {
-                user !== userinfo.id;
-              })
-              .map((user) => {
-                return (
-                  <div>
-                    <h1>{user?.length}</h1>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      );
-    });
-  };
+ 
 
   useEffect(() => {
     userChats(userinfo.email).then(async (res) => {
@@ -39,7 +19,7 @@ const ChatsBar = () => {
   }, [userinfo]);
 
   return (
-    <div>
+    <div className="ml-6">
       <div>{onotheruserdata()}</div>
 
       <div>
