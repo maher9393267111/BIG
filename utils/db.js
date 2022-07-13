@@ -227,9 +227,41 @@ export const ExistChat= (me,user) => {
 
 
  export const findOnotherUserData= async(id) => {
-  const userpath = doc(db, "users", `${id}`);
+ // console.log("user is 📍  📍  📍 ------>",id);
+  const userpath = doc(db, "users", id);
   const useris = await (await getDoc(userpath)).data();
-  console.log("useris☢️☢️☢️☢️------>",useris,'id:::::',id);
+//  console.log("useris☢️☢️☢️☢️------>",useris);
   return useris;
 
 }
+
+
+
+// find curent user All chats
+
+export const userChats= (user) => {
+  // console.log("user is 📍  📍  📍 ------>",user?.name);
+    
+   return getDocs(query(collection(db, "chats"),  
+   //  all users except auth user
+  //   user?.name !== undefined ? where("name", "!=", user?.name) : where("name", "!=", "")
+  // orderBy('orderby', "desc")
+   )).then((querySnapshot) => {
+ 
+     var data = [];
+     querySnapshot.forEach((doc) => {
+    
+         console.log("users is exist");
+         
+         data.push({ ...doc.data(),id: doc.id  })
+       
+     });
+   //  setProductsNew(data);
+ console.log("allUserChats IS------>",data);
+
+
+ const filterchats = data.filter(chat => chat.users.includes(user));
+     return  filterchats;
+   });
+ }
+ 

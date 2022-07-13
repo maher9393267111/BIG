@@ -50,7 +50,7 @@ const AuthContext = ({ children }) => {
   const [userinfo, setUserinfo] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
 const [onotherUser, setOnotherUser] = useState(null);
- 
+ const [userownChats, setUserChats] = useState([]);
   const dispatch = useDispatch();
 const router = useRouter();
 
@@ -210,6 +210,63 @@ updateDoc(doc(db, "users", auth.currentUser.email), {
 
 
 
+  const userChats=async (user) => {
+    return  getDocs(query(collection(db, "chats"), 
+   // where(user.id, "in","[users]" )   
+   // orderBy('orderby', "desc")
+    )).then((querySnapshot) => {
+  
+      var data = [];
+      querySnapshot.forEach((doc) => {
+     
+      //    console.log("user posts is exist");
+          
+          data.push({ ...doc.data(),id: doc.id  })
+        
+      });
+    //  setProductsNew(data);
+ // console.log("User Chats is 🔱🔱🔱----->",data);
+  
+  // filter where user is in users array 
+  
+  const chats =  data.filter(chat => chat.users.includes(user.id));
+  
+  
+  // then find onother user info from users collection
+   
+  const chatsWithUsers =    chats.map( async chat => {
+    const otherUser =  chat.users.find(useritem => useritem !== user.id);
+    //console.log("otherUser is🦕🦕🦕🦕------>",otherUser);
+    //console.log("user ARg is--⏺⏺⏺------>",user.id);
+   
+  
+   const userpath = doc(db, "users", otherUser);
+   const useris =  ( await getDoc(userpath)).data();
+   //console.log("useris☢️☢️☢️☢️------>",useris);
+  
+  
+     //const join = chats.concat({useris});
+     const join = {...chat,useris};
+     
+  
+  
+  // setUserChats(join);
+  // console.log( ' 🔷️🔷️🔷️------>',userownChats);
+    return join;
+  }
+  );
+
+  console.log("chatsWithUsers is🦕🦕🦕🦕------>",chatsWithUsers);
+  
+  return   setUserChats(chatsWithUsers)
+  
+  
+   
+    });
+  }
+
+
+
 
 
 
@@ -234,6 +291,9 @@ updateDoc(doc(db, "users", auth.currentUser.email), {
     handleOnotherUser,
     onotherUser,
     setOnotherUser,
+    userChats,
+    userownChats,
+   
    
    
  

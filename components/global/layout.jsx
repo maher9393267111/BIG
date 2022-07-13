@@ -3,7 +3,7 @@ import Sidebar from '../main/sidebar';
 import Navbar from './navbar';
 const Layout = ({children}) => {
     return (
-       <div>
+       <div className=' h-screen    overflow-y-scroll scrollbar-hide'>
 
 {/* -----navbar--- */}
 <div>
