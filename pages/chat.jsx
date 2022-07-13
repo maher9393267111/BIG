@@ -72,7 +72,7 @@ useEffect(() => {
 
 
     return (
-        <div>
+        <div className="  overflow-scroll no-scrollbar h-screen">
            
 {/* ----onother user info in header show---- */}
 
@@ -105,9 +105,11 @@ useEffect(() => {
 
 </div>
 
+<div className="h-[80%] w-full">
+
 
 {/* --messages--- */}
-<div className="flex max-h-screen h-full w-full mb-2 pt-4 px-6 overflow-y-scroll no-scrollbar">
+<div className="flex max-h-screen  h-full w-full mb-2 pt-4 px-6 overflow-y-scroll  scrollbar-hide">
             <div className="flex flex-col h-full w-full">
               {loading && (
                 <div className="flex flex-1 justify-center items-center">
@@ -126,6 +128,7 @@ useEffect(() => {
                 />
               ))}
               <div ref={bottomOfChat} className="py-8"></div>
+            </div>
             </div>
             </div>
             </div>

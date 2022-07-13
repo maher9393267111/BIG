@@ -32,7 +32,8 @@
     "react-toastify": "^9.0.5",
     "react-yandex-maps": "^4.6.0",
     "redux-devtools-extension": "^2.13.9",
-    "safe-json-stringify": "^1.2.0"
+    "safe-json-stringify": "^1.2.0",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
