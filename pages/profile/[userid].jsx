@@ -17,6 +17,8 @@ import  Layout from '../../components/global/layout';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import { useAuth } from '../../context/index';
 import {useRouter} from 'next/router';
+import {ExistChat} from '../../utils/db'
+import {message} from 'antd'
 
 const Profile = ({user}) => {
   console.log('date------>',user.createdAt);
@@ -36,16 +38,40 @@ const chatme = (
 const newChat = async () => {
 
 
+// search where th auth user and the user is in the chat if not create a new chat
+
+ExistChat(userinfo.email,user.email).then(async (chat)=>{
+
+if (chat == undefined ) 
+{
+
+  const chatmaked =  await  addDoc(collection(db, "chats"), {
+    users: [userinfo.email, user.email],
+    timestamp: serverTimestamp(),
+  });
+
+  await router.push(`/chat?chatid=${chatmaked.id}`);
+  message.info('New Chat created');
+
+}
 
 
-   const chat =  await  addDoc(collection(db, "chats"), {
-      users: [userinfo.email, user.email],
-      timestamp: serverTimestamp(),
-    });
 
-    // then redirect to created chat
-    router.push(`/chat?chatid=${chat.id}`);
+
+
+else if ( chat !== [] || chat !== undefined || chat === null) {
+
   
+message.info('You are already in this chat');
+console.log('chat in Profile--->',chat);
+   router.push(`/chat?chatid=${chat?.id}`);
+}
+
+
+
+})
+
+ 
 };
 
 

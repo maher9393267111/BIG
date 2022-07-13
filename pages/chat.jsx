@@ -4,24 +4,26 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import {
   useCollectionData,
   useDocumentData} from "react-firebase-hooks/firestore";
-import { query, orderBy, collection, doc } from "firebase/firestore";
+import { query, orderBy, collection, doc,getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import MessageInput from "../components/chat/messageInput";
-const Chat = () => {
+import safeJsonStringify from "safe-json-stringify";
+const Chat = ({chat}) => {
 
 
     const [user] = useAuthState(auth);
     const router = useRouter();
-    const { id } = router.query;
+  //  const { chatid } = router.query;
     const bottomOfChat = useRef(null);
   
     const q = query(
-      collection(db, "chats", id, "messages"),
-      orderBy("timestamp")
-    );
-    const [messages, loading] = useCollectionData(q);
-    const [chat] = useDocumentData(doc(db, "chats", id));
+        collection(db, "chats", chat.id, "messages"),
+        orderBy("timestamp")
+      );
+      const [messages, loading] = useCollectionData(q);
+
+
   
     const getOtherUser = (users, currentUser) => {
       return users?.filter((user) => user !== currentUser.email);
@@ -46,7 +48,7 @@ const Chat = () => {
            
 
 
-<MessageInput user={userinfo} chatId={id} />
+<MessageInput user={user} chatId={chat.id} />
 
 
 
@@ -55,3 +57,44 @@ const Chat = () => {
 }
 
 export default Chat;
+
+
+
+
+
+
+export async function getServerSideProps(context) {
+
+    const chatid = context.query.chatid 
+
+
+    console.log("id--->",chatid);
+    const snapshot = await getDoc(doc(db, "chats", chatid));
+    
+  
+    const chatdata = snapshot.data();
+  
+
+    if (!chatdata) {
+      return {
+        notFound: true,
+      };
+    }
+  
+     chatdata.id = snapshot.id;
+  
+  //  strignfy the data
+    const chat = JSON.parse(
+      safeJsonStringify({ id: snapshot.id, ...snapshot.data() }) // needed for dates
+    );
+     
+  
+
+
+
+  
+
+    return {
+      props: { chat: chat },
+    };
+  }

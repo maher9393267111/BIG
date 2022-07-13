@@ -190,3 +190,37 @@ export const handleChatusers= async(id) => {
   return useris;
 
 }
+
+
+
+// find if me or  nother user have chat with each other
+
+export const ExistChat= (me,user) => {
+  // console.log("user is 📍  📍  📍 ------>",user?.name);
+    
+   return getDocs(query(collection(db, "chats"),  
+   
+
+   )).then((querySnapshot) => {
+ 
+     var data = [];
+     querySnapshot.forEach((doc) => {
+    
+         console.log("users is exist");
+         
+         data.push({ ...doc.data(),id: doc.id  })
+       
+     });
+   //  setProductsNew(data);
+ console.log("Are we have Chat ???????? ------>",data);
+
+
+// the find chat between me and other user
+  var chat = data.find(chat => chat.users.includes(me) && chat.users.includes(user));
+  console.log("chat is ------>",chat);
+  return chat;
+
+   //  return  data;
+   });
+ }
+ 
