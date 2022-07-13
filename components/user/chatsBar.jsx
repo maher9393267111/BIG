@@ -20,7 +20,7 @@ const ChatsBar = () => {
 
   return (
     <div className="ml-6">
-      <div>{onotheruserdata()}</div>
+     
 
       <div>
         {AllChats.map((chat) => {
