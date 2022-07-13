@@ -8,7 +8,7 @@ export default function MessageBubble({
 }) {
   const sender = message.sender === user.email;
   return (
-    <>
+    <div className="">
       <div className={!sender ? `flex justify-start` : `flex justify-end`}>
         <div
           className={
@@ -31,6 +31,6 @@ export default function MessageBubble({
           </span>
         </div>
       )}
-    </>
+    </div>
   );
 }

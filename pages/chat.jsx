@@ -109,7 +109,7 @@ useEffect(() => {
 
 
 {/* --messages--- */}
-<div className="flex max-h-screen  h-full w-full mb-2 pt-4 px-6 overflow-y-scroll  scrollbar-hide">
+<div className="flex max-h-screen  h-full w-full mb-2 pt-4 px-6 overflow-y-scroll  scrollbar-hide mr-12">
             <div className="flex flex-col h-full w-full">
               {loading && (
                 <div className="flex flex-1 justify-center items-center">
@@ -117,7 +117,7 @@ useEffect(() => {
                 </div>
               )}
 
-<div>
+<div className="  mr-12">
 {messages?.map((msg, index) => (
                 <MessageBubble
                   user={user}
