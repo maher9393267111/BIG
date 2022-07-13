@@ -106,6 +106,13 @@ useEffect(() => {
 
 
 {/* --messages--- */}
+<div className="flex max-h-screen h-full w-full mb-2 pt-4 px-6 overflow-y-scroll no-scrollbar">
+            <div className="flex flex-col h-full w-full">
+              {loading && (
+                <div className="flex flex-1 justify-center items-center">
+                  <CgSpinner className="h-12 w-12 animate-spin text-gray-400" />
+                </div>
+              )}
 
 <div>
 {messages?.map((msg, index) => (
@@ -118,6 +125,8 @@ useEffect(() => {
                 />
               ))}
               <div ref={bottomOfChat} className="py-8"></div>
+            </div>
+            </div>
             </div>
 
 
