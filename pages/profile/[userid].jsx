@@ -25,21 +25,34 @@ import Layout from "../../components/global/layout";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useAuth } from "../../context/index";
 import { useRouter } from "next/router";
-import { ExistChat,Follow } from "../../utils/db";
+import { ExistChat,Follow,allfollowers } from "../../utils/db";
 import { message } from "antd";
 import UserLayout from "../../components/user/userLayout";
 
 const Profile = ({ user }) => {
-  console.log("date------>", user.createdAt);
+ // console.log("date------>", user.createdAt);
 
   const { userinfo, handleOnotherUser } = useAuth();
   const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
+
+  const [followers, setFollowers] = useState([]);
   const router = useRouter();
   const chatme = (
     <div>
       <p>Go to Chat</p>
     </div>
   );
+
+
+useEffect(() => {
+
+  allfollowers(user.email).then((res) => {
+    setFollowers(res);
+    console.log("followers", res);
+  })
+
+}, [db]);
+
 
   const newChat = async () => {
     // search where th auth user and the user is in the chat if not create a new chat
