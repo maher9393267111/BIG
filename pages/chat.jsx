@@ -12,6 +12,7 @@ import safeJsonStringify from "safe-json-stringify";
 import { findOnotherUserData} from '../utils/db'
 import { useAuth } from "../context/index";
 import  MessageBubble  from "../components/chat/MessageBubble";
+import { CgSpinner } from "react-icons/cg";
 const Chat = ({chat}) => {
 
 
