@@ -267,6 +267,28 @@ updateDoc(doc(db, "users", auth.currentUser.email), {
 
 
 
+  const fethuser = async () => {
+
+
+
+
+
+
+ const q = query(collection(db, "posts"), where("groupid", "==", groupid));
+ const unsub = onSnapshot(q, (QuerySnapshot) => {
+   let postsArray = [];
+   QuerySnapshot.forEach((doc) => {
+     postsArray.push({ ...doc.data(), id: doc.id });
+   });
+   console.log("from vivek", postsArray);
+    setGrouoPosts(postsArray);
+    console.log("🔥🔥🔥", grouoPosts);
+  // setTodos(postsArray);
+ });
+  }
+
+
+
 
 
 

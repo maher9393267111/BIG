@@ -308,19 +308,21 @@ await setDoc(doc(db, "users", userdata.id, "followers", userinfo?.email), {
 
 export  const unfollow = async (userinfo, userdata) => {
 
+  console.log("DBDATA--IS---->",userinfo.id,userdata.id);
   // elete it from group collection and from users collection
   
   try {
   
    
     const userDoc = doc(db, "users", userinfo.id, "following",userdata.id );
-    await deleteDoc(userDoc);
+    await deleteDoc(userDoc).then(() => {
     message.success("User Deleted From following");
 
+    })
     const onotherDoc = doc(db, "users", userdata.id, "followers",userinfo.id );
-    await deleteDoc(onotherDoc);
+    await deleteDoc(onotherDoc).then(() => {
     message.success("User Deleted From foloowers");
-
+    })
   }
   
 
@@ -379,12 +381,11 @@ export  const unfollow = async (userinfo, userdata) => {
 
   export const findUserById = async (id) => {
 
-const userpath = doc(db, "users", id);
+    const productRef = doc(db, "users", id);
+    const userdata = await getDoc(productRef);
 
-    const useris = await (await getDoc(userpath)).data();
-
-    return useris;
-
+    const user = ({ id: id, ...userdata.data() });
+return user
 
   }
  

@@ -168,7 +168,7 @@ const makeFollow = async (e) => {
             <div className=" text-right mt-12 mr-12">
 
              
-            
+         {userinfo?.id !== user?.id &&  
        
 <button
  onClick={  check?.length > 0 ?  makeUnfollow : makeFollow }
@@ -176,6 +176,7 @@ className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-f
  >
    {check?.length > 0 ? "Unfollow" : "Follow"}
  </button>
+}
  </div>
 
 
