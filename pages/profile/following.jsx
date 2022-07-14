@@ -65,7 +65,7 @@ const q3 = query(
 
 // check auth user following collection for each user in following collection in this user page
 
-const check  = authfo.forEach((item) => {
+const check  = authfo?.forEach((item) => {
 
     // chec every user in following collection in this user page
 
