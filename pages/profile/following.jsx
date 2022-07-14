@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import UserLayout from "../../components/user/userLayout";
 import { useAuth } from "../../context/index";
+import FollowList from "../../components/user/usersFollowList";
 import {
   useCollectionData,
   useDocumentData,
@@ -50,7 +51,6 @@ const Following = ({  }) => {
 
 
 
-
   const [user, setUser] = useState({});
 
   const fetchuser = async () => {
@@ -79,11 +79,14 @@ const Following = ({  }) => {
   }
 
 
+
+
 const fetchAuthuserFollowing = async () => {
-    const q2 = query(collection(db, "users",userinfo?.id,'following'), 
+
+    const q = query(collection(db, "users",userinfo?.id,'following'), 
     // where("groupid", "==", groupid)
      );
-  const unsub2 = onSnapshot(q2, (QuerySnapshot) => {
+  const unsub = onSnapshot(q, (QuerySnapshot) => {
     let postsArray = [];
     QuerySnapshot.forEach((doc) => {
       postsArray.push({ ...doc.data(), id: doc.id });
@@ -93,8 +96,10 @@ const fetchAuthuserFollowing = async () => {
     
    // setTodos(postsArray);
   });
+ 
 
 }
+
 
 
 
@@ -106,7 +111,7 @@ const fetchAuthuserFollowing = async () => {
   useEffect(() => {
 
       if ( userid ) {
-        fetchAuthuserFollowing();
+       
         fetchuser();
 
       
@@ -114,30 +119,26 @@ const fetchAuthuserFollowing = async () => {
   }, [userid,db,userinfo])
 
 
+  useEffect(() => {
 
-  //console.log("user💡💡💡💡",userid);
+    if ( userinfo?.id !== undefined ) {
+     
+    fetchAuthuserFollowing();
 
-  // const [user] = useDocumentData(doc(db, "users", userid));
-  // //console.log("user following---->💡💡💡💡",user);
+    
+}
+}, [userid,db,userinfo])
 
-  // const q = query(
-  //     collection(db, "users", userid, "followers"),
 
-  //   );
 
-  // const check  = authfo?.forEach((item) => {
 
-  //     // chec every user in following collection in this user page
 
-  //     const check2 = following?.filter((following) => { return following.id === item.id})
-  //    // console.log("👉️👉️👉️👉️👉️👉️",check2);
 
-  // })
+   
 
-  // useEffect(() => {
 
-  // checkitems();
-  // }, [followers]);
+
+  
 
   const makeFollow = async (user) => {
     
@@ -147,7 +148,7 @@ const fetchAuthuserFollowing = async () => {
   // make unfollow
 
   const makeUnfollow = async (user) => {
-    console.log("--->👉️👉️👉️👉️👉️👉️", user);
+    //console.log("--->👉️👉️👉️👉️👉️👉️", user);
    // e.preventDefault();
     unfollow(userinfo, user);
   };
@@ -194,67 +195,45 @@ const fetchAuthuserFollowing = async () => {
         <div className=" overflow-scroll scrollbar-hide h-[80vh] ml-12  phone:w-[277px] laptop:w-[422px] font-semibold text-[#536471]">
           <div>
             {following?.length > 0 ? (
+
+
+
               <div>
-                {following?.map((user) => {
-                  return (
-                    <div key={user?.id} className="my-12">
-                      <div className=" flex justify-between">
-                        {/* ---image and name and email---- */}
+                {/* // -----sharing following users show----- */}
+                <div>
 
-                        <div className="flex gap-6">
-                          {/* ---image-- */}
-                          <div>
-                            <img
-                              className="w-20 h-20 rounded-full"
-                              src={user?.image}
-                              alt="userImage"
-                            />
-                          </div>
-
-                          {/* name and email */}
-
-                          <div className=" font-semibold phone:text-sm  laptop:text-xl">
-                            <p> {user?.name}</p>
-
-                            <p>{user?.email}</p>
-                          </div>
+              
+                    {following
+                    .filter(item => authuserFollowing.find(item2 => item2.id === item.id))
+                    .map(t => {
+                      return (
+                        <div key={t?.id}>
+                       <FollowList following={t} deleteme ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
                         </div>
-
-                        {/* ----follow bitton---- */}
-
-                        <div className="">
-                          {userid === userinfo?.id && (
-                            <button
-                              onClick={()=>makeUnfollow(user)}
-                              className={`   bg-red-500  rounded-full px-4 py-2 text-white`}
-                            >
-                              Unfollow
-                            </button>
-                          )}
-                        </div>
+                      );
+                    })}
+</div>
+                
 
 
+         {/* // ----- NNNNot Same   following users show----- */}
+         <div className="">
 
-{/* // if not this user page  show follow this users button--- */}
-
-
-<div className="">
-                          {userid !== userinfo?.id && (
-                            <button
-                              onClick={()=>makeFollow(user)}
-                              className={`   bg-blue-500  rounded-full px-4 py-2 text-white`}
-                            >
-                              follow
-                            </button>
-                          )}
-                        </div>
+              
+{following
+   .filter(item => !authuserFollowing.find(item2 => item2.id === item.id))
+.map(t => {
+  return (
+    <div key={t?.id}>
+   <FollowList following={t} add ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
+    </div>
+  );
+})}
+</div>
 
 
 
-                      </div>
-                    </div>
-                  );
-                })}
+
               </div>
             ) : (
               <div>
