@@ -20,8 +20,14 @@ import {
   import safeJsonStringify from "safe-json-stringify";
   //import Tab from '../../components/user/Tab';
   import { db } from "../../firebase";
-  import { ExistChat,Follow,unfollow , } from "../../utils/db";
+  import { ExistChat,Follow,unfollow ,allfollowing, findUserById } from "../../utils/db";
   import NextHead from "../../components/global/NextHead";
+  import {
+    chunk,
+    cloneDeep,
+    orderBy as orderByFunction,
+    differenceBy
+  } from "lodash";
 const Following = ({}) => {
 
     const router = useRouter();
@@ -30,52 +36,89 @@ const {userinfo} = useAuth();
     // find pathname
     const pathname = router.pathname;
     console.log("pathname--->",pathname);
+
+
+    const [following, setFollowing] = useState([]);
+const [user, setUser] = useState({});
+const [authuserFollowing, setAuthuserFollowing] = useState([]);
+
+useEffect(() => {
+
+     if (userid) {
+ 
+    allfollowing(userid).then(res => {
+        console.log("RESPONSE------>💡💡💡💡",res);
+        setFollowing(res);
+    })
+}
+
+
+}, [userid,db])
+
+
+
+useEffect(() => {
+
+    if ( userid) {
+
+    findUserById(userid).then(res => {
+//console.log("RESPONSE NExtjs--------->💡💡💡💡",res); //💖💖💖💖
+        setUser(res);
+    })
+}
+}, [userid])
+
+
+useEffect(() => {
+
+    if (userid) {
+
+   allfollowing(userinfo?.id).then(res => {
+       console.log("RESPONSE🛴🛴🛴------>💡💡💡💡",res);
+       setAuthuserFollowing(res);
+   })
+}
+
+}, [userid,db])
+
+
  
 //console.log("user💡💡💡💡",userid);
 
-const [user] = useDocumentData(doc(db, "users", userid));
-//console.log("user following---->💡💡💡💡",user);
+// const [user] = useDocumentData(doc(db, "users", userid));
+// //console.log("user following---->💡💡💡💡",user);
 
-const q = query(
-    collection(db, "users", userid, "followers"),
+// const q = query(
+//     collection(db, "users", userid, "followers"),
     
-  );
-  const [followers, loading] = useCollectionData(q);
-console.log("followers🛹🛹🛹",followers);
-
-
-const q2 = query(
-  collection(db, "users", userid, "following"),
-  
-);
-const [following] = useCollectionData(q2);
-//console.log("following is➿➿➿",following);
+//   );
 
 
 
-const q3 = query(
-    collection(db, "users", userinfo?.id, "following"),
-    
-  );
-  const [authfo] = useCollectionData(q2);
 
 
-// const check = followers?.filter((follower) => { return follower.id === userinfo.id})
-// console.log("check in FOLLOIngggg PAge",check);
 
-// check auth user following collection for each user in following collection in this user page
 
-const check  = authfo?.forEach((item) => {
 
-    // chec every user in following collection in this user page
+// const check  = authfo?.forEach((item) => {
 
-    const check2 = following?.filter((following) => { return following.id === item.id})
-    console.log("👉️👉️👉️👉️👉️👉️",check2);
-return check2;
+//     // chec every user in following collection in this user page
 
-})
+//     const check2 = following?.filter((following) => { return following.id === item.id})
+//    // console.log("👉️👉️👉️👉️👉️👉️",check2);
 
-console.log("check",check);
+
+// })
+
+
+
+
+
+
+// useEffect(() => {
+
+// checkitems();
+// }, [followers]);
 
 
 
@@ -194,12 +237,12 @@ return (
 
 <div className=''>
 
-<button
+{/* <button
  onClick={  check?.length > 0 ?  makeUnfollow : makeFollow }
 className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-full px-4 py-2 text-white`}
  >
    {check?.length > 0 ? "Unfollow" : "Follow"}
- </button>
+ </button> */}
 
 
 </div>

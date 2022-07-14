@@ -21,35 +21,57 @@ import {
   //import Tab from '../../components/user/Tab';
   import { db } from "../../firebase";
   import NextHead from "../../components/global/NextHead";
+  import { Follow,unfollow ,allfollowers, findUserById } from "../../utils/db"
 const Followers = ({}) => {
 
     const router = useRouter();
     const { userid } = router.query;
+    const {userinfo} = useAuth();
 
     // find pathname
     const pathname = router.pathname;
-    console.log("pathname--->",pathname);
+  //  console.log("pathname--->",pathname);
  
-//console.log("user💡💡💡💡",userid);
+
+    const [followers, setFollowers] = useState([]);
+const [user, setUser] = useState({});
+const [authuserFollowers, setAuthuserFollowers] = useState([]);
+
+useEffect(() => {
+
+     if (userid) {
+ 
+    allfollowers(userid).then(res => {
+       // console.log("RESPONSE------>💡💡💡💡",res);
+        setFollowers(res);
+    })
+}
+
+}, [userid,db])
 
 
-const [user] = useDocumentData(doc(db, "users", userid));
 
 
-const q = query(
-    collection(db, "users", userid, "followers"),
-    
-  );
-  const [followers, loading] = useCollectionData(q);
-console.log("followers🛹🛹🛹",followers);
 
 
-const q2 = query(
-  collection(db, "users", userid, "following"),
-  
-);
-const [following] = useCollectionData(q2);
-console.log("following is➿➿➿",following);
+
+
+
+useEffect(() => {
+
+    if ( userid) {
+
+    findUserById(userid).then(res => {
+//console.log("RESPONSE NExtjs--------->💡💡💡💡",res); //💖💖💖💖
+        setUser(res);
+    })
+}
+}, [userid])
+
+
+
+
+
 
 
 

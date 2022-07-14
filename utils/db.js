@@ -338,18 +338,15 @@ export  const unfollow = async (userinfo, userdata) => {
 
 
   export const  allfollowing = async (userid) => {
-    const q = query(collection(db, "users", userid, 'following')); 
-    //where("groupid", "==", groupid));
-    const unsub = onSnapshot(q, (QuerySnapshot) => {
-      let postsArray = [];
-      QuerySnapshot.forEach((doc) => {
-        postsArray.push({ ...doc.data(), id: doc.id });
-      });
-      console.log("userFollwing---->", postsArray);
-      
-     return postsArray;
-     
-    });
+  
+    const q = query(
+			collection(db, 'users',userid, 'following'),
+		//	where('authorId', '==', user.uid)
+		)
+		const querySnapshot = await getDocs(q)
+		const data = querySnapshot.docs.map((doc) => doc.data())
+    return data;
+    
 
 
 }
@@ -363,22 +360,31 @@ export  const unfollow = async (userinfo, userdata) => {
   // user all followers onother user page
 
   export  const allfollowers = async (userid) => {
-
-    const q = query(collection(db, "users", userid, 'followers')); 
-    //where("groupid", "==", groupid));
-    const unsub = onSnapshot(q, (QuerySnapshot) => {
-      let postsArray = [];
-      QuerySnapshot.forEach((doc) => {
-        postsArray.push({ ...doc.data(), id: doc.id });
-      });
-      console.log("userFollowers in DBBB---->", postsArray);
-      
-     return postsArray;
-     
-    });
    
-
+    const q = query(
+			collection(db, 'users',userid, 'followers'),
+		//	where('authorId', '==', user.uid)
+		)
+		const querySnapshot = await getDocs(q)
+		const data = querySnapshot.docs.map((doc) => doc.data())
+    return data;
+    
 
 
 
   }
+
+
+// find user byid
+
+  export const findUserById = async (id) => {
+
+const userpath = doc(db, "users", id);
+
+    const useris = await (await getDoc(userpath)).data();
+
+    return useris;
+
+
+  }
+ 
