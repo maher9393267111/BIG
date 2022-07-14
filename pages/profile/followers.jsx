@@ -25,6 +25,10 @@ const Followers = ({}) => {
 
     const router = useRouter();
     const { userid } = router.query;
+
+    // find pathname
+    const pathname = router.pathname;
+    console.log("pathname--->",pathname);
  
 console.log("user💡💡💡💡",userid);
 
@@ -49,13 +53,60 @@ console.log("following is➿➿➿",following);
     return (
      
 
-<div>
+<UserLayout
+userid={userid}
+>
 
-{userid}
 
-{followers?.length}
+<div className=' container mx-12'>
+
+
+{/* ---flex followers and following--- */}
+<div className=' flex gap-12'>
+
+{/* ----followers--- */}
+
+<div className=''>
+
+<div className={`${pathname ='/profile/followers'  ? '  bg-green-400' : ' '}   `}>
+    follower
+</div>
+
+
 
 </div>
+
+
+{/* ---following--- */}
+
+<div className=''>
+<Link href={`/profile/following?userid=${userid}`}>
+    <div className={`  `}>
+        following
+    </div>
+</Link>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</UserLayout>
             
        
     );
@@ -64,30 +115,3 @@ console.log("following is➿➿➿",following);
 export default Followers;
 
 
-
-// export async function getServerSideProps(context) {
-//     const id = context.params.userid;
-//     console.log("id--->", id);
-//     const snapshot = await getDoc(doc(db, "users", id));
-  
-//     const userdata = snapshot.data();
-  
-//     if (!userdata) {
-//       return {
-//         notFound: true,
-//       };
-//     }
-  
-//     userdata.id = snapshot.id;
-  
-//     //  strignfy the data
-//     const user = JSON.parse(
-//       safeJsonStringify({ id: snapshot.id, ...snapshot.data() }) // needed for dates
-//     );
-
-//     console.log("user👉️👉️👉️👉️👉️👉️👉️👉️--->", user);
-  
-//     return {
-//       props: { user },
-//     };
-//   }
