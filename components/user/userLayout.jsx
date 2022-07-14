@@ -4,7 +4,7 @@ import ChatsBar from './chatsBar';
 import Sidebar from '../main/sidebar';
 import Navbar from '../global/navbar';
 import Nav2 from './nav2';
-const UserLayout = ({children,userid,noNavbar=false},userdata) => {
+const UserLayout = ({children,userid,noNavbar=false,user}) => {
 const {userinfo} = useAuth();
 
 
@@ -25,7 +25,7 @@ const {userinfo} = useAuth();
 
 {noNavbar && 
         <div>
-        <Nav2  user={userdata} />
+        <Nav2  user={user} />
         </div>
 }
 

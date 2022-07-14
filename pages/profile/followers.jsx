@@ -30,7 +30,10 @@ const Followers = ({}) => {
     const pathname = router.pathname;
     console.log("pathname--->",pathname);
  
-console.log("user💡💡💡💡",userid);
+//console.log("user💡💡💡💡",userid);
+
+
+const [user] = useDocumentData(doc(db, "users", userid));
 
 
 const q = query(
@@ -56,6 +59,7 @@ console.log("following is➿➿➿",following);
 <UserLayout
 userid={userid}
 noNavbar={true}
+user ={user}
 >
 
 

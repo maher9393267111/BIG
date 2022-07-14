@@ -20,18 +20,21 @@ import {
   import safeJsonStringify from "safe-json-stringify";
   //import Tab from '../../components/user/Tab';
   import { db } from "../../firebase";
+  import { ExistChat,Follow,unfollow , } from "../../utils/db";
   import NextHead from "../../components/global/NextHead";
 const Following = ({}) => {
 
     const router = useRouter();
     const { userid } = router.query;
-
+const {userinfo} = useAuth();
     // find pathname
     const pathname = router.pathname;
     console.log("pathname--->",pathname);
  
-console.log("user💡💡💡💡",userid);
+//console.log("user💡💡💡💡",userid);
 
+const [user] = useDocumentData(doc(db, "users", userid));
+//console.log("user following---->💡💡💡💡",user);
 
 const q = query(
     collection(db, "users", userid, "followers"),
@@ -46,8 +49,52 @@ const q2 = query(
   
 );
 const [following] = useCollectionData(q2);
-console.log("following is➿➿➿",following);
+//console.log("following is➿➿➿",following);
 
+
+
+const q3 = query(
+    collection(db, "users", userinfo?.id, "following"),
+    
+  );
+  const [authfo] = useCollectionData(q2);
+
+
+// const check = followers?.filter((follower) => { return follower.id === userinfo.id})
+// console.log("check in FOLLOIngggg PAge",check);
+
+// check auth user following collection for each user in following collection in this user page
+
+const check  = authfo.forEach((item) => {
+
+    // chec every user in following collection in this user page
+
+    const check2 = following?.filter((following) => { return following.id === item.id})
+    console.log("👉️👉️👉️👉️👉️👉️",check2);
+return check2;
+
+})
+
+console.log("check",check);
+
+
+
+const makeFollow = async (e) => {
+
+    e.preventDefault();
+    Follow(userinfo,user)
+  
+  }
+  
+  
+  // make unfollow
+  
+    const makeUnfollow = async (e) => {
+  
+      e.preventDefault();
+      unfollow(userinfo,user)
+    }
+  
 
 
 
@@ -58,7 +105,7 @@ console.log("following is➿➿➿",following);
 
 <UserLayout
 userid={userid}
-userdata ={user}
+user ={user}
 noNavbar={true}
 >
 
@@ -147,7 +194,12 @@ return (
 
 <div className=''>
 
-folllow
+<button
+ onClick={  check?.length > 0 ?  makeUnfollow : makeFollow }
+className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-full px-4 py-2 text-white`}
+ >
+   {check?.length > 0 ? "Unfollow" : "Follow"}
+ </button>
 
 
 </div>
