@@ -337,8 +337,19 @@ export  const unfollow = async (userinfo, userdata) => {
   // ----user all following onother user page----
 
 
-const  alfollowing = async (userid) => {
-
+  export const  allfollowing = async (userid) => {
+    const q = query(collection(db, "users", userid, 'following')); 
+    //where("groupid", "==", groupid));
+    const unsub = onSnapshot(q, (QuerySnapshot) => {
+      let postsArray = [];
+      QuerySnapshot.forEach((doc) => {
+        postsArray.push({ ...doc.data(), id: doc.id });
+      });
+      console.log("userFollwing---->", postsArray);
+      
+     return postsArray;
+     
+    });
 
 
 }
@@ -360,7 +371,7 @@ const  alfollowing = async (userid) => {
       QuerySnapshot.forEach((doc) => {
         postsArray.push({ ...doc.data(), id: doc.id });
       });
-      console.log("userFolloers---->", postsArray);
+      console.log("userFollowers in DBBB---->", postsArray);
       
      return postsArray;
      

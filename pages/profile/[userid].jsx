@@ -25,9 +25,10 @@ import Layout from "../../components/global/layout";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { useAuth } from "../../context/index";
 import { useRouter } from "next/router";
-import { ExistChat,Follow,allfollowers } from "../../utils/db";
+import { ExistChat,Follow,unfollow , } from "../../utils/db";
 import { message } from "antd";
 import UserLayout from "../../components/user/userLayout";
+import { CgAbstract } from "react-icons/cg";
 
 const Profile = ({ user }) => {
  // console.log("date------>", user.createdAt);
@@ -35,7 +36,11 @@ const Profile = ({ user }) => {
   const { userinfo, handleOnotherUser } = useAuth();
   const currentDate = <Moment format="YYYY/MM/DD">{user.createdAt}</Moment>;
 
-  const [followers, setFollowers] = useState([]);
+  
+
+const [checkfollow, setCheckfollow] = useState(false);
+
+
   const router = useRouter();
   const chatme = (
     <div>
@@ -44,16 +49,35 @@ const Profile = ({ user }) => {
   );
 
 
-useEffect(() => {
 
-  allfollowers(user.email).then((res) => {
-    setFollowers(res);
-    console.log("followers", res);
-  })
+  const q = query(
+    collection(db, "users", user.id, "followers"),
+    
+  );
+  const [followers, loading] = useCollectionData(q);
+console.log("followers🛹🛹🛹",followers);
 
-}, [db]);
+
+const q2 = query(
+  collection(db, "users", user.id, "following"),
+  
+);
+const [following] = useCollectionData(q2);
+console.log("following is➿➿➿",following);
 
 
+
+
+const check = followers?.filter((follower) => { return follower.id === userinfo.id})
+console.log("check",check);
+
+
+
+
+
+
+
+// create new chat if not created yet Else go to already created chat
   const newChat = async () => {
     // search where th auth user and the user is in the chat if not create a new chat
 
@@ -103,6 +127,15 @@ const makeFollow = async (e) => {
 }
 
 
+// make unfollow
+
+  const makeUnfollow = async (e) => {
+
+    e.preventDefault();
+    unfollow(userinfo,user)
+  }
+
+
 
   return (
     <UserLayout
@@ -131,15 +164,27 @@ const makeFollow = async (e) => {
               </div>
             </div>
 
-            {/* ----- follow bottn---- */}
+        
+            <div className=" text-right mt-12 mr-12">
+
+             
+            
+       
+<button
+ onClick={  check?.length > 0 ?  makeUnfollow : makeFollow }
+className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-full px-4 py-2 text-white`}
+ >
+   {check?.length > 0 ? "Unfollow" : "Follow"}
+ </button>
+ </div>
+
+
+
+
+          {/* ----- follow bottn---- */}
 
             <div className=" mt-6 mb-6 text-right mr-12  ">
-              <Button
-              onClick={makeFollow }
-              cursor="pointer"
-              width={"136px"} colorScheme="messenger">
-                Follow
-              </Button>
+            
 
               {/* ---chat buton--- */}
 
@@ -148,11 +193,8 @@ const makeFollow = async (e) => {
                   <Popover placement="topRight" content={chatme}>
                     {/* <Link href={`/chat/${user?.id + userinfo?.id}`}> */}
                     <p onClick={newChat} className=" relative -top-6">
-                      <img
-                        className="w-8 h-8 rounded-full mx-2 cursor-pointer"
-                        src="https://cdn3.iconfinder.com/data/icons/instagram-latest/1000/Instagram_send_message-256.png"
-                        alt=""
-                      />
+                     
+                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-8 h-8 rounded-full cursor-pointer r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"><g><path d="M19.25 3.018H4.75C3.233 3.018 2 4.252 2 5.77v12.495c0 1.518 1.233 2.753 2.75 2.753h14.5c1.517 0 2.75-1.235 2.75-2.753V5.77c0-1.518-1.233-2.752-2.75-2.752zm-14.5 1.5h14.5c.69 0 1.25.56 1.25 1.25v.714l-8.05 5.367c-.273.18-.626.182-.9-.002L3.5 6.482v-.714c0-.69.56-1.25 1.25-1.25zm14.5 14.998H4.75c-.69 0-1.25-.56-1.25-1.25V8.24l7.24 4.83c.383.256.822.384 1.26.384.44 0 .877-.128 1.26-.383l7.24-4.83v10.022c0 .69-.56 1.25-1.25 1.25z"></path></g></svg>
                     </p>
                     {/* </Link> */}
                   </Popover>
@@ -182,12 +224,16 @@ const makeFollow = async (e) => {
 
                   <div>
                     <div className="text-xl flex gap-12 tg font-semibold">
-                      <div>
-                        <p className="">Following</p>
+                      <div className=" cursor-pointer">
+                      <Link href={`/profile/following?userid=${user.id}`}>
+                        <p className="">Following  <span>{following?.length}</span></p>
+                      </Link>
                       </div>
 
-                      <div>
-                        <p>Followers</p>
+                      <div className=" cursor-pointer">
+                        <Link href={`/profile/followers?userid=${user.id}`}>
+                        <p>Followers  <span>{followers?.length}</span></p>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -209,6 +255,7 @@ export async function getServerSideProps(context) {
   const snapshot = await getDoc(doc(db, "users", id));
 
   const userdata = snapshot.data();
+  //console.log("userdata--->", userdata);
 
   if (!userdata) {
     return {
@@ -222,6 +269,7 @@ export async function getServerSideProps(context) {
   const user = JSON.parse(
     safeJsonStringify({ id: snapshot.id, ...snapshot.data() }) // needed for dates
   );
+  
 
   return {
     props: { user },
