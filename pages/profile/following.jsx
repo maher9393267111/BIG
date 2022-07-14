@@ -76,9 +76,29 @@ const Following = ({  }) => {
 
 
 
-    
-
   }
+
+
+const fetchAuthuserFollowing = async () => {
+    const q2 = query(collection(db, "users",userinfo?.id,'following'), 
+    // where("groupid", "==", groupid)
+     );
+  const unsub2 = onSnapshot(q2, (QuerySnapshot) => {
+    let postsArray = [];
+    QuerySnapshot.forEach((doc) => {
+      postsArray.push({ ...doc.data(), id: doc.id });
+    });
+    //console.log("from vivek", postsArray);
+     setAuthuserFollowing(postsArray);
+    
+   // setTodos(postsArray);
+  });
+
+}
+
+
+
+
 
 
 
@@ -86,7 +106,9 @@ const Following = ({  }) => {
   useEffect(() => {
 
       if ( userid ) {
+        fetchAuthuserFollowing();
         fetchuser();
+
       
   }
   }, [userid,db,userinfo])
@@ -117,8 +139,8 @@ const Following = ({  }) => {
   // checkitems();
   // }, [followers]);
 
-  const makeFollow = async (e) => {
-    e.preventDefault();
+  const makeFollow = async (user) => {
+    
     Follow(userinfo, user);
   };
 
@@ -137,6 +159,7 @@ const Following = ({  }) => {
         <div className=" flex laptop:justify-between mx-12 phone:w-[277px] laptop:w-[422px] font-semibold text-[#536471]">
           {/* ----followers--- */}
 
+{authuserFollowing?.length}
           <div className="pfd">
             <Link href={`/profile/followers?userid=${userid}`}>
               <div
@@ -209,6 +232,25 @@ const Following = ({  }) => {
                             </button>
                           )}
                         </div>
+
+
+
+{/* // if not this user page  show follow this users button--- */}
+
+
+<div className="">
+                          {userid !== userinfo?.id && (
+                            <button
+                              onClick={()=>makeFollow(user)}
+                              className={`   bg-blue-500  rounded-full px-4 py-2 text-white`}
+                            >
+                              follow
+                            </button>
+                          )}
+                        </div>
+
+
+
                       </div>
                     </div>
                   );
