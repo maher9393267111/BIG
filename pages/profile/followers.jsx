@@ -103,7 +103,7 @@ noNavbar={true}
 
 
 {followers?.length > 0 ? (
-<div>
+<div >
 
 
     {    followers?.map((user) => {
@@ -111,7 +111,7 @@ noNavbar={true}
 
 return (
 
-    <div>
+    <div key={user?.id}>
         <h1>{user?.name}</h1>
 
     </div>

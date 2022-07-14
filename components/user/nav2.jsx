@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Nav2 = () => {
+const Nav2 = ({user}) => {
     return (
        <div>
 
@@ -33,6 +33,14 @@ const Nav2 = () => {
         </div>
     </div>
 </div>
+
+
+{/* ----user data--- */}
+
+<div>
+    {user?.name}
+</div>
+
 
 
 </div>

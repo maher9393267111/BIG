@@ -50,11 +50,15 @@ console.log("following is➿➿➿",following);
 
 
 
+
+
+
     return (
      
 
 <UserLayout
 userid={userid}
+userdata ={user}
 noNavbar={true}
 >
 
