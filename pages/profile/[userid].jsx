@@ -220,6 +220,13 @@ className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-f
                     Joined At {currentDate}
                   </h2>
 
+
+                  {/* ----user sozu if it exist---- */}
+
+                  <div>
+                    <p className="tg text-[17px] mb-4 font-medium">{user?.quote ? user.quote : 'Gitme Dur! Daha şimdiden deliler gibi özledim'}</p>
+                  </div>
+
                   {/* ------followers  and following ---- */}
 
                   <div>

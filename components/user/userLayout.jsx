@@ -3,7 +3,8 @@ import { useAuth } from '../../context';
 import ChatsBar from './chatsBar';
 import Sidebar from '../main/sidebar';
 import Navbar from '../global/navbar';
-const UserLayout = ({children,userid}) => {
+import Nav2 from './nav2';
+const UserLayout = ({children,userid,noNavbar=false}) => {
 const {userinfo} = useAuth();
 
 
@@ -12,11 +13,23 @@ const {userinfo} = useAuth();
         <div className=' h-screen    overflow-y-scroll scrollbar-hide'>
 
         {/* -----navbar--- */}
+        {!noNavbar && 
         <div>
         <Navbar />
         </div>
+}
         
         
+{/* --- followers and following pages navabr show only---- */}
+
+
+{noNavbar && 
+        <div>
+        <Nav2 />
+        </div>
+}
+
+
         {/* -----content---- */}
         
         
@@ -36,7 +49,7 @@ const {userinfo} = useAuth();
  {userinfo?.email !== userid ?
 
 (
-        <div className='phone:col-span-4  laptop:col-span-3'>
+        <div className={ ` ${noNavbar && 'mt-14 ml-12'}  phone:col-span-4  laptop:col-span-3`}>
             <Sidebar/>
         </div>
 ) : (
@@ -49,7 +62,7 @@ const {userinfo} = useAuth();
  
 )      }  
         
-        <div className=' phone:col-span-8  laptop:col-span-9'>
+        <div className={` ${noNavbar && 'mt-12'} phone:col-span-8  laptop:col-span-9`}>
             {children}
         </div>
         

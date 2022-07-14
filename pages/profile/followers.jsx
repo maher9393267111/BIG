@@ -55,6 +55,7 @@ console.log("following is➿➿➿",following);
 
 <UserLayout
 userid={userid}
+noNavbar={true}
 >
 
 
@@ -62,14 +63,15 @@ userid={userid}
 
 
 {/* ---flex followers and following--- */}
-<div className=' flex gap-12'>
+<div className=' flex justify-between mx-12 phone:[230px] laptop:w-[422px] font-semibold text-[#536471]'>
 
 {/* ----followers--- */}
 
-<div className=''>
+<div className='pfd '>
 
-<div className={`${pathname ='/profile/followers'  ? '  bg-green-400' : ' '}   `}>
-    follower
+<div className={`${pathname ='/profile/followers'  ? ' ' : ' '}  text  cursor-pointer w-full h-full   hover:bg-[#EAF6F6] `}>
+    <p className={`${pathname ='/profile/followers'  ? 'hell ' : ' '} pf `}>  follower</p>
+  
 </div>
 
 
@@ -79,10 +81,11 @@ userid={userid}
 
 {/* ---following--- */}
 
-<div className=''>
+<div className='pfd'>
 <Link href={`/profile/following?userid=${userid}`}>
-    <div className={`  `}>
-        following
+    <div className={` cursor-pointer text hover:bg-[#EAF6F6] w-full h-full `}>
+       
+        <p className='pf'> following </p>
     </div>
 </Link>
 
@@ -90,6 +93,50 @@ userid={userid}
 
 </div>
 
+
+
+{/* ----followersList show---- */}
+
+<div className=' overflow-scroll scrollbar-hide h-[80vh]  phone:[240px] laptop:w-[422px] font-semibold text-[#536471]'>
+   
+<div>
+
+
+{followers?.length > 0 ? (
+<div>
+
+
+    {    followers?.map((user) => {
+
+
+return (
+
+    <div>
+        <h1>{user?.name}</h1>
+
+    </div>
+) })}
+</div>) : (
+<div>
+
+<div>
+    <h1 className='  text-2xl my-12 text-center'>No Followers Yet</h1>
+</div>
+
+
+</div>
+
+)}
+</div>
+
+
+
+
+
+
+
+
+</div>
 
 
 

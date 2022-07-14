@@ -97,3 +97,38 @@ right: 10%;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+
+
+
+.pf{
+
+  @apply relative top-[10px]    align-middle
+}
+
+
+.pfd{
+  @apply w-[144px] h-[55px] text-center 
+}
+
+
+.hell::after{
+
+
+  content: '';
+  position: absolute;
+  height: 4px;
+  width: 70%;
+  background-color:blue;
+  top: 120%;
+  right: 15%;
+
+}
+
+
+
+.text{
+
+@apply laptop:text-2xl phone:text-[17px]
+
+}

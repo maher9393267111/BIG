@@ -20,8 +20,11 @@ const ChatsBar = () => {
 
   return (
     <div className="ml-6">
+    
+<div className=" font-bold text-2xl text-red-500 ml-4 mt-6">
      
-
+  <h1 className="text-red-500 ">My Chats</h1>
+</div>
       <div>
         {AllChats.map((chat) => {
          

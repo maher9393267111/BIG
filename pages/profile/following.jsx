@@ -55,6 +55,7 @@ console.log("following is➿➿➿",following);
 
 <UserLayout
 userid={userid}
+noNavbar={true}
 >
 
 
@@ -62,15 +63,16 @@ userid={userid}
 
 
 {/* ---flex followers and following--- */}
-<div className=' flex gap-12'>
+<div className=' flex laptop:justify-between mx-12 phone:w-[277px] laptop:w-[422px] font-semibold text-[#536471]'>
 
 {/* ----followers--- */}
 
-<div className=''>
+<div className='pfd'>
 
 <Link href={`/profile/followers?userid=${userid}`}>
-<div className={`  `}>
-    follower
+<div className={` w-full h-full cursor-pointer text hover:bg-[#EAF6F6] `}>
+
+    <p className='pf'>followers</p>
 </div>
 </Link>
 
@@ -81,15 +83,102 @@ userid={userid}
 
 {/* ---following--- */}
 
-<div className=''>
+<div className='pfd'>
 
-    <div className={`${pathname ='/profile/following'  ? '  bg-green-400' : ' '}   `}>
-        following
+    <div className={`${pathname ='/profile/following'  ? ' ' : ' '}    cursor-pointer  text-2xl hover:bg-[#EAF6F6] w-full h-full `}>
+       
+        <p className={`${pathname ='/profile/following'  ? 'hell ' : ' '} pf `}>following</p>
     </div>
 
 </div>
 
 </div>
+
+
+
+{/* ----followersList show---- */}
+
+<div className=' overflow-scroll scrollbar-hide h-[80vh] ml-12  phone:w-[277px] laptop:w-[422px] font-semibold text-[#536471]'>
+   
+<div>
+
+
+{following?.length > 0 ? (
+<div>
+
+
+    {    following?.map((user) => {
+
+
+return (
+
+    <div key={user?.id}  className='my-12' >
+      
+<div className=' flex justify-between'>
+
+{/* ---image and name and email---- */}
+
+
+<div className='flex gap-6'>
+
+{/* ---image-- */}
+<div>
+    <img className='w-20 h-20 rounded-full' src={user?.image} alt="userImage" />
+</div>
+
+{/* name and email */}
+
+<div className=' font-semibold phone:text-sm  laptop:text-xl'>
+
+<p> {user?.name}</p>
+
+<p>{user?.email}</p>
+
+</div>
+
+
+</div>
+
+{/* ----follow bitton---- */}
+
+<div className=''>
+
+folllow
+
+
+</div>
+
+
+</div>
+
+
+
+    </div>
+) })}
+</div>) : (
+<div>
+
+<div>
+    <h1 className='text-2xl my-12 text-center'>No Followers Yet</h1>
+</div>
+
+
+</div>
+
+)}
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
 
 
 
