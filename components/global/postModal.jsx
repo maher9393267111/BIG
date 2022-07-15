@@ -234,6 +234,7 @@ const handlePost = async () => {
       postedbyId: userinfo.id,
         caption: caption,
         topic: category,
+        cretedAt: Date.now(),
        
         videos: videos || '',
         image: image || '',
@@ -441,7 +442,7 @@ const handlePost = async () => {
         </div>
         <div className='flex flex-col gap-3 pb-10'>
           <label className='text-md font-medium '>Caption</label>
-          <input
+          <textarea
             type='text'
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
