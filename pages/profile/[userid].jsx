@@ -205,7 +205,7 @@ className =  {`  ${check?.length > 0 ?  "bg-red-500" : "bg-blue-500"}  rounded-f
 
             {/* -----user inf---- */}
 
-            <div className="ml-8 mt-12">
+            <div className="ml-8 mt-16">
               <div className=" ">
                 <h1 className="text-xl font-semibold tg">{user.name}</h1>
 

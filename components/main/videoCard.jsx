@@ -6,7 +6,7 @@ import { BsPlay } from 'react-icons/bs';
 import {useState,useEffect,useRef} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-const VideoCard = ({post,homepage=false}) => {
+const VideoCard = ({post,homepage=false,cathide=false}) => {
 
 
 const {videos,topic,postedby,postedbyImage,caption,id,potedbyEmail} = post
@@ -67,7 +67,7 @@ const {videos,topic,postedby,postedbyImage,caption,id,potedbyEmail} = post
                     </p>
                   </div>
                 </Link>
-                <Link href={`/detail/${id}`}>
+                <Link href={`/post/${id}`}>
                   <p className='mt-2 font-normal '>{caption}</p>
                 </Link>
               </div>
@@ -85,17 +85,17 @@ const {videos,topic,postedby,postedbyImage,caption,id,potedbyEmail} = post
               onMouseLeave={() => setIsHover(false)}
               className='rounded-3xl w-full relative'
             >
-              <Link href={`/detail/${id}`}>
+              <Link href={`/post/${id}`}>
                 <video
                   loop
                   ref={videoRef}
                   src={videos.video}
-                  className='lg:w-[900px]   laptop:h-[528px] w-2/3 rounded-2xl cursor-pointer bg-gray-100'
+                  className={ `laptop:w-[900px]   laptop:h-auto w-full rounded-2xl cursor-pointer bg-gray-100`}
                 ></video>
               </Link>
     
               {isHover && (
-                <div className='absolute laptop:-bottom-12 cursor-pointer left-8 tablet:left-14 laptop:left-0 flex gap-10 laptop:justify-between   laptop:w-[88%]  p-3'>
+                <div className={ `absolute ${cathide ? 'laptop:bottom-24' : 'laptop:-bottom-12'}  cursor-pointer left-8 tablet:left-14 laptop:left-0 flex gap-10 laptop:justify-between ${cathide ? 'phone:w-[300px] justify-between' : ''}  laptop:w-[88%]  p-3`}>
                   {playing ? (
                     <button onClick={onVideoPress}>
                       <BsFillPauseFill className='text-black text-2xl lg:text-4xl' />
