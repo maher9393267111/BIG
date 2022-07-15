@@ -57,7 +57,7 @@ const PostCart = ({ post }) => {
   
 {/* -----posts text--- */}
 
-<ReactMarkdown children={caption}/>
+{/* <ReactMarkdown children={caption}/> */}
 </div>
 
 
@@ -68,7 +68,7 @@ const PostCart = ({ post }) => {
 
 
           <div className='w-full phone:h-[355px] tablet:h-[422px] laptop:h-[500px]  relative'>
-            <img className='w-full h-full cursor-pointer rounded-lg object-cover' src={post.image && post.image.image} alt="" />
+            <img className='w-full h-full cursor-pointer rounded-lg object-contain' src={post.image && post.image.image} alt="" />
 
 
             {/* ---absolute topic show--- */}

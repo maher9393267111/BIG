@@ -3,10 +3,10 @@ import NextHead from "../components/global/NextHead";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Box } from "@chakra-ui/react";
-import MapComponent from "../components/maps/map";
+
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { Placemark } from "react-yandex-maps";
+
 import Link from "next/link";
 import { useAuth } from "../context";
 import { useRouter } from "next/router";
