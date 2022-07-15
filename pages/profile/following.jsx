@@ -208,7 +208,7 @@ const fetchAuthuserFollowing = async () => {
                     .map(t => {
                       return (
                         <div key={t?.id}>
-                       <FollowList following={t} deleteme ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
+                       <FollowList authuser ={userinfo} following={t} deleteme ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
                         </div>
                       );
                     })}
@@ -225,7 +225,7 @@ const fetchAuthuserFollowing = async () => {
 .map(t => {
   return (
     <div key={t?.id}>
-   <FollowList following={t} add ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
+   <FollowList authuser ={userinfo} following={t} add ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
     </div>
   );
 })}

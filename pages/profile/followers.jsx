@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 import Link from 'next/link';
 import UserLayout from "../../components/user/userLayout";
 import { useAuth } from "../../context/index";
+import FollowList from "../../components/user/usersFollowList";
 import {
     useCollectionData,
     useDocumentData,
@@ -21,7 +22,8 @@ import {
   //import Tab from '../../components/user/Tab';
   import { db } from "../../firebase";
   import NextHead from "../../components/global/NextHead";
-  import { Follow,unfollow ,allfollowers, findUserById } from "../../utils/db"
+  import { Follow,unfollow ,allfollowers, findUserById,allfollowing } from "../../utils/db"
+import { CheckboxGroup } from '@chakra-ui/react';
 const Followers = ({}) => {
 
     const router = useRouter();
@@ -36,7 +38,7 @@ const Followers = ({}) => {
     const [followers, setFollowers] = useState([]);
 const [user, setUser] = useState({});
 const [authuserFollowers, setAuthuserFollowers] = useState([]);
-
+const [refresh, setRefresh] = useState(false);
 useEffect(() => {
 
      if (userid) {
@@ -50,6 +52,18 @@ useEffect(() => {
 }, [userid,db])
 
 
+useEffect(() => {
+
+    if (userinfo?.id) {
+
+        allfollowing(userinfo?.id).then(res => {
+      // console.log("RESPONSE------>💡💡💡💡",res);
+       setAuthuserFollowers(res); // ✔✔✔
+    //   console.table('authUser followers',res);
+   })
+}
+
+}, [db,refresh])
 
 
 
@@ -68,6 +82,22 @@ useEffect(() => {
 }
 }, [userid])
 
+
+
+const makeFollow = async (user) => {
+    
+    Follow(userinfo, user);
+    setRefresh(!refresh);
+  };
+
+  // make unfollow
+
+  const makeUnfollow = async (user) => {
+    //console.log("--->👉️👉️👉️👉️👉️👉️", user);
+   // e.preventDefault();
+    unfollow(userinfo, user);
+    setRefresh(!refresh);
+  };
 
 
 
@@ -123,61 +153,65 @@ user ={user}
 
 {/* ----followersList show---- */}
 
-<div className=' overflow-scroll scrollbar-hide h-[80vh]  phone:[240px] laptop:w-[422px] font-semibold text-[#536471]'>
-   
-<div>
+<div className=" overflow-scroll scrollbar-hide h-[80vh] ml-12  phone:w-[277px] laptop:w-[422px] font-semibold text-[#536471]">
+          <div>
+            {followers?.length > 0 ? (
 
 
-{followers?.length > 0 ? (
-<div >
+
+              <div>
+                {/* // -----sharing following users show----- */}
+                <div>
+
+              
+                    {followers
+                    .filter(item => authuserFollowers.find(item2 => item2.id === item.id))
+                    .map(t => {
+                      return (
+                        <div key={t?.id}>
+                       <FollowList authuser ={userinfo} following={t} deleteme ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
+                        </div>
+                      );
+                    })}
+</div>
+                
 
 
-    {    followers?.map((user) => {
+         {/* // ----- NNNNot Same   following users show----- */}
+         <div className="">
 
-
-return (
-
-    <div key={user?.id}>
-        <h1>{user?.name}</h1>
-
+              
+{followers
+   .filter(item => !authuserFollowers.find(item2 => item2.id === item.id))
+.map(t => {
+  return (
+    <div key={t?.id}>
+   <FollowList authuser ={userinfo} following={t} add ={true} makeUnfollow ={makeUnfollow} makeFollow={makeFollow} />
     </div>
-) })}
-</div>) : (
-<div>
-
-<div>
-    <h1 className='  text-2xl my-12 text-center'>No Followers Yet</h1>
-</div>
-
-
-</div>
-
-)}
+  );
+})}
 </div>
 
 
 
 
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <h1 className="text-2xl my-12 text-center">
+                    No Followers Yet
+                  </h1>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
 
 
 
 
 </div>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
 
 </UserLayout>
             
