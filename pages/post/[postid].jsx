@@ -30,6 +30,7 @@ import { message } from "antd";
 import UserLayout from "../../components/user/userLayout";
 import PostCart from "../../components/main/postCart";
 import UseronotherPosts from "../../components/post/useronotherPosts";
+import FunctionButtons from "../../components/post/functionButtons";
 
 const Postid = ({post}) => {
 
@@ -65,7 +66,7 @@ const Postid = ({post}) => {
 
 {/* --grid post card and onother this post user posts--show---- */}
 
-<div className=" grid grid-cols-12">
+<div className=" grid grid-cols-12  pb-20">
 
 
 
@@ -76,7 +77,7 @@ const Postid = ({post}) => {
 
 {/* ----likes and coments length--- */}
 
-<div className=" phone:ml-12 laptop:ml-24 ">
+<div className=" phone:ml-20 laptop:ml-24   ">
 
 <div className="flex gap-12 font-semibold text-md">
 
@@ -93,6 +94,20 @@ const Postid = ({post}) => {
 
 
 </div>
+
+
+{/* -----function buttons--- */}
+
+<div className="   my-6">
+
+
+<FunctionButtons/>
+
+
+
+</div>
+
+
 
 
 </div>

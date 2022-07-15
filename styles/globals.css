@@ -132,3 +132,9 @@ right: 10%;
 @apply laptop:text-2xl phone:text-[17px]
 
 }
+
+
+.ic-color{
+  fill: currentcolor;
+
+}
