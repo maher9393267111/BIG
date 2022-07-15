@@ -15,7 +15,10 @@ import {
   doc,
   getDoc,
   addDoc,
+  getDocs,
+  setDoc,
   serverTimestamp,
+    deleteDoc,
 } from "firebase/firestore";
 import safeJsonStringify from "safe-json-stringify";
 //import Tab from '../../components/user/Tab';
@@ -31,17 +34,16 @@ import UserLayout from "../../components/user/userLayout";
 import PostCart from "../../components/main/postCart";
 import UseronotherPosts from "../../components/post/useronotherPosts";
 import FunctionButtons from "../../components/post/functionButtons";
+import { toast } from "react-toastify";
+import { CgKey } from "react-icons/cg";
 
 const Postid = ({post}) => {
 
     const { userinfo, handleOnotherUser } = useAuth();
 
-    const q = query(
-        collection(db, "InstaPosts", post?.id, "likes"),
+const [refresh, setRefresh] = useState(false);
 
-      );
-      const [likes, loading] = useCollectionData(q);
-    console.log("likes---->🛹🛹🛹",likes);
+
 
 
     const q2 = query(
@@ -49,7 +51,86 @@ const Postid = ({post}) => {
 
     );
     const [comments] = useCollectionData(q2);
-    console.log("comments---->>> is➿➿➿",comments);
+  //  console.log("comments---->>> is➿➿➿",comments);
+
+
+  
+
+ 
+const [likes, setLikes] = useState([]);
+const [hasLiked, setHasLiked] = useState(false);
+
+
+    
+const fetchlikes = async () => {
+
+    const userin = await getDocs(collection(db, "InstaPosts", post?.id, "likes"));
+
+    const allLikes = [];
+
+    userin.forEach((doc) => allLikes.push({ ...doc.data(), id: doc.id }));
+     console.log("🔥🔥🔥", allLikes);
+    setLikes(allLikes);
+    //  return allPosts;
+
+}
+
+
+
+
+
+
+useEffect(() => {
+
+    fetchlikes()
+
+}, [post?.id,db,refresh]);
+
+
+
+  useEffect(() => {
+   
+      // ---->>> importnat to work good
+      setHasLiked(
+        likes?.findIndex((like) => like.id === userinfo.id) !== -1
+      );
+      console.log("has liked---->", hasLiked);
+  
+  }, [likes, refresh]);
+
+
+
+    const likedPost = async () => {
+        try {
+          if (userinfo.name) {
+            if (hasLiked )   {
+                
+              setRefresh(!refresh);
+              console.log(post.id, "___Delete Like____");
+              // delete doc from likes if aleready liked
+              await deleteDoc(doc(db, "InstaPosts", post.id, "likes", userinfo.id));
+              message.success(`Unliked`);
+            
+            } else  {
+              setRefresh(!refresh);
+            
+              console.log(post.id, "___add Like___");
+              // add doc to likes if not already liked
+              await setDoc(doc(db, "InstaPosts", post.id, "likes", userinfo.id), {
+                username: userinfo.name,
+              });
+              //  message.success("Liked",hasLiked);
+            
+            }
+          } else {
+            
+           // message.error("Please login to like");
+          }
+        } catch (error) {
+          message.error(error.message);
+        }
+      };
+    
 
 
 
@@ -68,7 +149,7 @@ const Postid = ({post}) => {
 
 <div className=" grid grid-cols-12  pb-20">
 
-
+{hasLiked ? 'you liket this post' : ' you have not liked this post'}
 
 <div className="phone:col-span-12 laptop:col-span-6  mr-8">
     <PostCart cathide={true} post={post}/>
@@ -79,7 +160,7 @@ const Postid = ({post}) => {
 
 <div className=" phone:ml-20 laptop:ml-24   ">
 
-<div className="flex gap-12 font-semibold text-md">
+<div className="flex gap-12 font-semibold text-lg">
 
 <div className=" hover:underline cursor-pointer tg">
     <p>{likes?.length} likes</p>
@@ -101,7 +182,14 @@ const Postid = ({post}) => {
 <div className="   my-6">
 
 
-<FunctionButtons/>
+<FunctionButtons
+likes={likes}
+comments={comments}
+userinfo={userinfo}
+post={post}
+likedPost={likedPost}
+
+/>
 
 
 

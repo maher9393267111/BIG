@@ -1,7 +1,20 @@
 
 import {FaRegComment} from 'react-icons/fa';
+import {BsHeart} from 'react-icons/bs';
+import {AiOutlineRetweet} from 'react-icons/ai';
+import { Popover   } from 'antd';
+const FunctionButtons = ({post,userinfo,likedPost}) => {
 
-const FunctionButtons = () => {
+
+
+   
+
+
+
+
+
+
+
     return (
         <div>
 
@@ -13,10 +26,10 @@ const FunctionButtons = () => {
 
 
 <div>
-    <p>
-    <div className="w-8 h-8 hover:text-[#3AB4F2] ">
+    <p className='transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center'>
+    <div className="w-12 h-12 hover:text-[#3AB4F2] ">
             
-            <FaRegComment className= "fill-current   transition-all duration-500 hover: text-2xl" />
+            <FaRegComment className= "fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2" />
             
         </div>
     </p>
@@ -25,13 +38,36 @@ const FunctionButtons = () => {
 
 
 <div>
-    <p>2</p>
+    <p className='transition-all duration-500   hover:bg-[#FEE3EC] rounded-full text-center'>
+
+    <div className="w-12 h-12 hover:text-[#FF869E] ">
+            
+            <BsHeart
+            
+            onClick={likedPost}
+            className= "fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2 font-bold" />
+            
+        </div>
+
+
+
+    </p>
 </div>
 
 
 
 <div>
-    <p>3</p>
+    <p className='transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center'
+    >
+  
+
+    <div className="w-12 h-12 hover:text-green-400 relative  ">
+            
+            <AiOutlineRetweet className= "fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2" />
+            
+        </div>
+
+    </p>
 </div>
 
 
