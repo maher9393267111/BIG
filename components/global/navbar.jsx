@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button, Popover } from 'antd';
 import {useAuth} from '../../context/index';
+import User from './audiophile.png';
 
 const Navbar = () => {
 
@@ -52,7 +53,7 @@ const content = (
 <div>
 
 <Link href='/main'><div>
-    <img className=' cursor-pointer' src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
+    <img className=' cursor-pointer  ' src=" https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
 </div>
 
 </Link>
@@ -98,7 +99,7 @@ src={userinfo?.image} alt="" />
 
 <Popover placement="topRight"  content={content}>
         {/* <Button> */}
-             <img className='w-12 h-12 rounded-full cursor-pointer' src="https://cdn2.iconfinder.com/data/icons/buno-ui-interface/32/__chat_messagem_bubble-256.png" alt="" />
+             <img className='w-12 h-12 rounded-full cursor-pointer' src="https://cdn1.iconfinder.com/data/icons/general-user-interface-5/64/messages-chats-multiple-interface-256.png" alt="" />
         
         {/* </Button> */}
       </Popover>

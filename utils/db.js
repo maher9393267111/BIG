@@ -347,6 +347,7 @@ export  const unfollow = async (userinfo, userdata) => {
 		)
 		const querySnapshot = await getDocs(q)
 		const data = querySnapshot.docs.map((doc) => doc.data())
+    console.log("hfffffffffff-->",data);
     return data;
     
 
@@ -385,7 +386,43 @@ export  const unfollow = async (userinfo, userdata) => {
     const userdata = await getDoc(productRef);
 
     const user = ({ id: id, ...userdata.data() });
+    console.log("user is ❇❇❇------>",user);
 return user
 
   }
  
+
+
+
+
+  export const UserOnotherPosts= (userid,postid) => {
+    // console.log("user is 📍  📍  📍 ------>",user?.name);
+      
+     return getDocs(query(collection(db, "InstaPosts"),  
+    where("postedbyId", "==", userid),
+   // where("id", "!=", postid),
+    // orderBy('createdAt', "desc")
+     )).then((querySnapshot) => {
+   
+       var data = [];
+       querySnapshot.forEach((doc) => {
+      
+           console.log("users is exist");
+           
+           data.push({ ...doc.data(),id: doc.id  })
+         
+       });
+     //  setProductsNew(data);
+   console.log("ONOTHER POSTS ISSSS------>",data?.length);
+  
+// filter data where postid is not equal to postid
+const filterdata = data.filter(post => post.id !== postid);
+
+console.log("filtereeeed----->",filterdata?.length);
+
+  
+ //  const filterchats = data.filter(chat => chat.users.includes(user));
+       return  filterdata;
+     });
+   }
+   

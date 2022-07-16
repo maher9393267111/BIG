@@ -1,5 +1,5 @@
 import React from "react";
-
+import {allfollowing } from '../utils/db'
 import Moment from "moment";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -28,10 +28,11 @@ import PostCard from "../components/main/postCart";
 import CommentIcons from "../components/commentPage/commentIcons";
 import InputComment from "../components/commentPage/commentInput";
 import ReplayList from "../components/commentPage/ReplayList";
+import Revaltedusers from "../components/commentPage/revaltedusers";
 const Commentid = ({ post, comment }) => {
   const router = useRouter();
   const { userinfo } = useAuth();
-
+const [authuserFollowing, setAuthUserFollowing] = useState([]);
   const [snapshot] = useCollection(
     collection(db, "InstaPosts", post?.id, "comments"),
     orderBy("timestamp", "desc")
@@ -64,6 +65,27 @@ const Commentid = ({ post, comment }) => {
 
 
 console.log("Replays Length-🔴🔴🔴-------<>",Replays);
+
+
+
+useEffect(() => {
+
+if (userinfo?.id !== undefined) 
+{
+
+  allfollowing(userinfo.id).then((response) => {
+    setAuthUserFollowing(response);
+   // console.log("RESPONSEEE-🔴🔴🔴-------<>",response);
+  //  console.log("authUserFollowing🌟🌟🌟--->", authuserFollowing);
+  })
+}
+  
+
+}, [userinfo?.id]);
+
+
+
+
 
 
 
@@ -228,7 +250,18 @@ console.log("Replays Length-🔴🔴🔴-------<>",Replays);
 
           {/* --Revalted 🔥🔥🔥🔥🔥🔥 users of comment---- */}
 
-          <div className="  phone:col-span-0 laptop:block phone:hidden laptop:col-span-5"></div>
+          <div className="  phone:col-span-0 laptop:block phone:hidden laptop:col-span-5">
+
+<div>
+  <Revaltedusers 
+  
+  authUserFollowing={authuserFollowing}
+  postid={post?.id} commentby={comment?.userid} postedby={post?.postedby} userinfo={userinfo}  />
+</div>
+
+
+
+          </div>
         </div>
       </div>
     </UserLayout>
@@ -265,6 +298,8 @@ export async function getServerSideProps(context) {
   const comment = JSON.parse(
     safeJsonStringify({ id: commentsnapshot.id, ...commentsnapshot.data() }) // needed for dates
   );
+
+
 
   return {
     props: { post, comment },
