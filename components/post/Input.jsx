@@ -55,6 +55,9 @@ const  selectEmoji = (emo) => {
     const docRef = await addDoc(collection(db, "InstaPosts",postid,'comments'), {
       comment: input,
       name: userinfo.name,
+      userid: userinfo.id,
+      postid: postid,
+      replyto:postedby,
     
       userImg: userinfo.image,
       timestamp: serverTimestamp(),

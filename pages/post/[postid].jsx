@@ -37,6 +37,7 @@ import FunctionButtons from "../../components/post/functionButtons";
 import { toast } from "react-toastify";
 import { CgKey } from "react-icons/cg";
 import CommentInput from "../../components/post/Input";
+import ListCommnets from "../../components/post/listCommnets";
 
 const Postid = ({ post }) => {
   const { userinfo, handleOnotherUser } = useAuth();
@@ -143,6 +144,15 @@ const Postid = ({ post }) => {
     userinfo={userinfo}  />
 </div>
 
+
+
+{/* ------all comments------ */}
+
+<div>
+  <ListCommnets
+  comments={comments}
+  />
+</div>
 
 
             </div>
