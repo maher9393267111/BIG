@@ -7,48 +7,47 @@ import { Popover } from "antd";
 import {FaHeart} from 'react-icons/fa';
 import Link from "next/link";
 import { comment } from 'postcss';
-const CommentIcons = ({commentid,postid,fromComment =false}) => {
+const CommentIcons = ({comNumber,likesNumber}) => {
 
 const [hasLiked, setHasLiked] = useState(false);
 
 
     return (
-        <div className='my-8'>
+        <div className='my-2'>
 <div>
 
 <div>
         {/* --flex icons---- */}
 
-        <div className=" flex justify-between w-[77%] mx-auto">
+        <div className=" flex justify-between w-[66%] mx-auto">
           <div>
-            <p className="transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center
-            ">
-                <Link href={`/comment?commentid=${commentid}&&postid=${postid}`}><div className="w-8 h-8 hover:text-[#3AB4F2] ">
-                <FaRegComment className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2" />
+            <p className="transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center ">
+                 {/* <Link href={`/comment?commentid=${commentid}&&postid=${postid}`}> */}
+                
+                <div className="w-12 h-12 flex hover:text-[#3AB4F2] "> 
+              
+                <p className='mt-2'>  {comNumber}</p>
+                <FaRegComment className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 " />
               </div>
-                </Link>
+                 {/* </Link>  */}
             </p>
           </div>
-
+      
           <div>
+      
             <p className="transition-all duration-500   hover:bg-[#FEE3EC] rounded-full text-center">
-              <div className="w-8 h-8 hover:text-[#FF869E] ">
-                {!hasLiked ? 
-                ( 
+              <div className="w-12 h-12 flex hover:text-[#FF869E] ">
+               
+                <p className='mt-3 font-semibold '>    {likesNumber} </p>
                 <BsHeart
-                   onClick={likedPost}
-                  className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2 font-bold"
+                //    onClick={likedPost}
+                  className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 left font-bold"
                 />
-  ) : (
+               
+ 
+   
 
-    <div className=' w-8 h-8'>
-         <FaHeart
-                   onClick={likedPost}
-                  className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2 font-bold"
-                />
-
-    </div>
-  )}
+  
               </div>
             </p>
           </div>

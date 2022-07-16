@@ -1,6 +1,6 @@
 import React from "react";
 
-import Moment from "react-moment";
+import Moment from "moment";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button, Popover } from "@chakra-ui/react";
@@ -24,32 +24,37 @@ import { db } from "../firebase";
 import { useAuth } from "../context";
 import UserLayout from "../components/user/userLayout";
 import { BsArrowLeft } from "react-icons/bs";
-import PostCard from '../components/main/postCart';
+import PostCard from "../components/main/postCart";
+import CommentIcons from "../components/commentPage/commentIcons";
 
 const Commentid = ({ post, comment }) => {
   const router = useRouter();
   const { userinfo } = useAuth();
 
+  const [snapshot] = useCollection(
+    collection(db, "InstaPosts", post?.id, "comments"),
+    orderBy("timestamp", "desc")
+  );
 
-  const [snapshot] = useCollection(collection(db, "InstaPosts", post?.id, "comments") , orderBy("timestamp", "desc"));
+  const comments = snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  const comments= snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  //console.log("comments---------<>",comments);
 
-//console.log("comments---------<>",comments);
+  const [snapshotLikes] = useCollection(
+    collection(db, "InstaPosts", post?.id, "likes"),
+    orderBy("timestamp", "desc")
+  );
 
-const [snapshotLikes] = useCollection(collection(db, "InstaPosts", post?.id, "likes") , orderBy("timestamp", "desc"));
-
-const likes= snapshotLikes?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
- 
-
-
+  const likes = snapshotLikes?.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return (
     <UserLayout userid={comment?.userid}>
       {/* -----herder  GoBack-- */}
 
-      <div>
+      <div className=" pb-20">
         {/* --grid ---- */}
         <div className=" grid grid-cols-12">
           <div className="  phone:col-span-12 laptop:col-span-7">
@@ -78,30 +83,65 @@ const likes= snapshotLikes?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
                   </div>
                 </div>
 
-{/* ------post image and info---- */}
+                {/* ------post image and info---- */}
 
-<div className=" mx-6 my-4">
+                <div className=" mx-6 my-4">
+                  <div className="">
+                    <div>
+                      <PostCard cathide={true} post={post} />
+                    </div>
+
+                    <div className=" -mt-4">
+                      <CommentIcons
+                        comNumber={comments?.length}
+                        likesNumber={likes?.length}
+                      />
+                    </div>
+
+                    {/* -comment details---- */}
+
+                    <div className=" mt-4">
+                      <div className=" flex gap-4 mt-6">
+                        <div>
+                          <img
+                            className=" w-[77px] h-[77px] rounded-full"
+                            src={comment?.userImg}
+                            alt=""
+                          />
+                        </div>
+
+                        <div className=" mt-2 text-[17px] font-semibold">
+                          <p>{comment?.name}</p>
+
+                          <p className=" mt-2 tg">
+                            reply{" "}
+                            <span className=" text-blue-500">
+                              @{comment?.replyto}
+                            </span>{" "}
+                          </p>
+                        </div>
+
+                        {/* ----comment text---- */}
+
+                        <div></div>
+                      </div>
 
 
-<div className="">
+{/* ---margin here---- */}
+
+                      <div className="mt-6  ml-24 h-[100px]">
+                        <div>
+                          <p className="text-xl font-semibold">{comment?.comment}</p>
+                        </div>
 
 
+{/* comment date--- */}
 <div>
-  <PostCard cathide={true} post={post} />
-</div>
-
-
-<div>
-  {likes?.length}
-</div>
-
-
-
-
-
-
-
-
+  <p className=" text-xl font-semibold text-blue-400 my-6">
+  {Moment(new Date(comment?.timestamp?.seconds * 1000)).format(
+              "MMM DD, YYYY h:mm a"
+            )}
+  </p>
 </div>
 
 
@@ -109,20 +149,13 @@ const likes= snapshotLikes?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
 
 
-
-
-
-
-</div>
-
-
-
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-
-
 
           {/* --Revalted 🔥🔥🔥🔥🔥🔥 users of comment---- */}
 
