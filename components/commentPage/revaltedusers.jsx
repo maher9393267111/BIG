@@ -26,7 +26,7 @@ const Revaltedusers = ({
   const check2= (userarg) => {
     authUserFollowing?.map((user) => {
       return (
-        <div>
+        <div key={user?.id}>
           <h1>
             <button>{user?.name === userarg ? "follow " : "unfollow"}</button>as
           </h1>
