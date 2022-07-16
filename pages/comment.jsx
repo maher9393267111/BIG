@@ -18,22 +18,39 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import safeJsonStringify from "safe-json-stringify";
-import {useRouter} from "next/router";
+import {useRouter} from "next/router"
+import {db} from '../firebase'
 
 
-const Commentid = () => {
+const Commentid = ({post}) => {
 
 
 const router = useRouter();
 
+  const [comment, setComment] = useState('');
 // find commnet id and postid from query
-const commentid = router.query.commentid;
-const postid = router.query.postid;
+const commentid = router.query.commentid;   // ☑☑☑☑
+const postid = router.query.postid;  // ☑☑☑☑
 
-console.log("commentid--->", commentid);
+// then fetch post data from firebase with portid
+// then fetch comment data from firebase with commentid
+
+
+if (!commentid || !postid) {
+  return <div>404</div>;
+}
+
+
+
+
+
+
+
+console.log("commentid--->", commentid, "postid--->", postid);
 
     return (
         <div>
+          {post?.topic}
             
         </div>
     );
@@ -47,9 +64,9 @@ export default Commentid;
 
 
 export async function getServerSideProps(context) {
-    const id = context.params.commentid;
+    const id = context.query.postid;
     console.log("id--->", id);
-    const snapshot = await getDoc(doc(db, "", id));
+    const snapshot = await getDoc(doc(db, "InstaPosts",id));
   
     const userdata = snapshot.data();
     //console.log("userdata--->", userdata);
@@ -63,13 +80,13 @@ export async function getServerSideProps(context) {
     userdata.id = snapshot.id;
   
     //  strignfy the data
-    const user = JSON.parse(
+    const post = JSON.parse(
       safeJsonStringify({ id: snapshot.id, ...snapshot.data() }) // needed for dates
     );
     
   
     return {
-      props: { user },
+      props: { post },
     };
   }
   

@@ -70,7 +70,7 @@ const ListCommnets = ({ comments,postid }) => {
                   </div>
 
                   {/* icon--- */}
-                  <div>share {com?.id}</div>
+                  <div>share </div>
                 </div>
 
                 {/* --Comment icons---- */}
