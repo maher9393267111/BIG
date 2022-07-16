@@ -21,7 +21,8 @@ const [hasLiked, setHasLiked] = useState(false);
 
         <div className=" flex justify-between w-[77%] mx-auto">
           <div>
-            <p className="transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center">
+            <p className="transition-all duration-500   hover:bg-[#CDF0EA] rounded-full text-center
+            ">
                 <Link href={`/comment?commentid=${commentid}&&postid=${postid}`}><div className="w-8 h-8 hover:text-[#3AB4F2] ">
                 <FaRegComment className="fill-current   transition-all duration-500 hover: text-3xl relative top-2 left-2" />
               </div>
