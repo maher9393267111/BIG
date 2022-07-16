@@ -104,7 +104,7 @@ const Postid = ({ post }) => {
     <UserLayout userid={post?.postedbyId}>
       {/* --grid post card and onother this post user posts--show---- */}
 
-      <div className=" grid grid-cols-12  pb-20">
+      <div className=" grid grid-cols-12  pb-24">
         <div className="phone:col-span-12 laptop:col-span-6  mr-8">
           <PostCart cathide={true} post={post} />
 
@@ -137,7 +137,10 @@ const Postid = ({ post }) => {
             <div className="wrapper ">
             
 <div>
-    <CommentInput  userinfo={userinfo}  />
+    <CommentInput postedbyId ={post?.postedbyId} postedby={post?.postedby} 
+    postedbyImage={post?.postedbyImage} postid={post?.id} 
+    
+    userinfo={userinfo}  />
 </div>
 
 
