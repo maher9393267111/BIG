@@ -22,18 +22,17 @@ import {useRouter} from "next/router"
 import {db} from '../firebase'
 
 
-const Commentid = ({post}) => {
+const Commentid = ({post,comment}) => {
 
 
 const router = useRouter();
 
-  const [comment, setComment] = useState('');
+
 // find commnet id and postid from query
 const commentid = router.query.commentid;   // ☑☑☑☑
 const postid = router.query.postid;  // ☑☑☑☑
 
-// then fetch post data from firebase with portid
-// then fetch comment data from firebase with commentid
+
 
 
 if (!commentid || !postid) {
@@ -51,6 +50,7 @@ console.log("commentid--->", commentid, "postid--->", postid);
     return (
         <div>
           {post?.topic}
+          {comment?.comment}
             
         </div>
     );
@@ -65,11 +65,14 @@ export default Commentid;
 
 export async function getServerSideProps(context) {
     const id = context.query.postid;
+    const comid = context.query.commentid;
     console.log("id--->", id);
     const snapshot = await getDoc(doc(db, "InstaPosts",id));
+    const commentsnapshot = await getDoc(doc(db, "InstaPosts",id, "comments", comid));
   
     const userdata = snapshot.data();
     //console.log("userdata--->", userdata);
+
   
     if (!userdata) {
       return {
@@ -84,9 +87,16 @@ export async function getServerSideProps(context) {
       safeJsonStringify({ id: snapshot.id, ...snapshot.data() }) // needed for dates
     );
     
+    const comment = JSON.parse(
+      safeJsonStringify({ id: commentsnapshot.id, ...commentsnapshot.data() }) // needed for dates
+    );
+    
+
+
+
   
     return {
-      props: { post },
+      props: { post, comment },
     };
   }
   
