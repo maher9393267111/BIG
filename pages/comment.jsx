@@ -217,9 +217,9 @@ if (userinfo?.id !== undefined)
 <div className=" pb-24">
 
 <div>
-  {Replays?.map((replay) => (
+  {Replays?.map((replay,i) => (
 
-<div>
+<div className=""  key={i}>
 
   <ReplayList replay={replay} />
 
@@ -256,7 +256,7 @@ if (userinfo?.id !== undefined)
   <Revaltedusers 
   
   authUserFollowing={authuserFollowing}
-  postid={post?.id} commentby={comment?.userid} postedby={post?.postedby} userinfo={userinfo}  />
+  postid={post?.id} commentby={comment?.userid} postedby={post?.postedbyId} userinfo={userinfo}  />
 </div>
 
 

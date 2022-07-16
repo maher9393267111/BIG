@@ -6,7 +6,7 @@ const NextHead = (props) => {
     <Head>
       <title>{props.title} | Audiophile</title>
       <meta name="description" content={props.metaDescription} />
-      <link rel="icon" href='/logo2.png' />
+      <link rel="icon" href='/13.png' />
     </Head>
   );
 };

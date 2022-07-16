@@ -53,7 +53,10 @@ const content = (
 <div>
 
 <Link href='/main'><div>
-    <img className=' cursor-pointer  ' src=" https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" />
+    <img className=' cursor-pointer w-[199px] h-[83px] object-contain  '
+    src='/13.png'
+   // src=" https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="" 
+    />
 </div>
 
 </Link>
