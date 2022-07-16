@@ -112,7 +112,7 @@ console.log("comments---------<>",comments);
 
       <div className=" grid grid-cols-12  pb-24">
         <div className="phone:col-span-12 laptop:col-span-6  mr-8">
-          <PostCart cathide={true} post={post} />
+          <PostCart postpage={true} cathide={true} post={post} />
 
           {/* ----post likes an coments---- and create ----- */}
 

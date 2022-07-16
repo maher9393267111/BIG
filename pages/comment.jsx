@@ -26,7 +26,8 @@ import UserLayout from "../components/user/userLayout";
 import { BsArrowLeft } from "react-icons/bs";
 import PostCard from "../components/main/postCart";
 import CommentIcons from "../components/commentPage/commentIcons";
-
+import InputComment from "../components/commentPage/commentInput";
+import ReplayList from "../components/commentPage/ReplayList";
 const Commentid = ({ post, comment }) => {
   const router = useRouter();
   const { userinfo } = useAuth();
@@ -49,6 +50,22 @@ const Commentid = ({ post, comment }) => {
     id: doc.id,
     ...doc.data(),
   }));
+
+
+  const [snapshotreplays] = useCollection(
+    collection(db, "InstaPosts", post?.id, "comments", comment?.id, "CommentComments"),
+    orderBy("timestamp", "desc")
+  );
+
+  const Replays = snapshotreplays?.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+
+console.log("Replays Length-🔴🔴🔴-------<>",Replays);
+
+
 
   return (
     <UserLayout userid={comment?.userid}>
@@ -126,26 +143,78 @@ const Commentid = ({ post, comment }) => {
                         <div></div>
                       </div>
 
-
-{/* ---margin here---- */}
+                      {/* ---margin here---- */}
 
                       <div className="mt-6  ml-24 h-[100px]">
                         <div>
-                          <p className="text-xl font-semibold">{comment?.comment}</p>
+                          <p className="text-xl font-semibold">
+                            {comment?.comment}
+                          </p>
                         </div>
 
+                        {/* comment date--- */}
+                        <div>
+                          <p className=" text-xl font-semibold text-blue-400 my-6">
+                            {Moment(
+                              new Date(comment?.timestamp?.seconds * 1000)
+                            ).format("MMM DD, YYYY h:mm a")}
+                          </p>
+                        </div>
 
-{/* comment date--- */}
+{/* reply to this comment input start--- */}
+
 <div>
-  <p className=" text-xl font-semibold text-blue-400 my-6">
-  {Moment(new Date(comment?.timestamp?.seconds * 1000)).format(
-              "MMM DD, YYYY h:mm a"
-            )}
-  </p>
+
+ {/* -if auth suer is ownerer this comment dont show reply input---- */}
+  <div>
+    {userinfo?.id === comment?.userid ? (
+
+<div>
+
+
+   
+   
+   </div>
+    ):(
+
+      <div>
+         <InputComment
+    comment={comment}
+    postid={post?.id}
+    userinfo={userinfo}
+    />
+      </div>
+
+    )}
+
+    
+ 
+  </div>
+
+{/* --------comment replysList start---  */}
+<div className=" pb-24">
+
+<div>
+  {Replays?.map((replay) => (
+
+<div>
+
+  <ReplayList replay={replay} />
+
+</div>
+
+  ))}
+
 </div>
 
 
 
+
+</div>
+
+
+
+</div>
 
 
 

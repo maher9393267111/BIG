@@ -17,9 +17,10 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-import { emojis } from "./emojis";
+import { emojis } from "../post/emojis";
 
-const Input = ({ postedbyId, postedby, postedbyImage, postid, userinfo }) => {
+const InputCommentPage = ({ 
+     postid, userinfo,comment }) => {
   const filePickerRef = useRef(null);
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -52,26 +53,28 @@ const Input = ({ postedbyId, postedby, postedbyImage, postid, userinfo }) => {
     setLoading(true);
 
     const docRef = await addDoc(
-      collection(db, "InstaPosts", postid, "comments"),
+      collection(db, "InstaPosts", postid, "comments",comment?.id, "CommentComments"),
       {
         comment: input,
         name: userinfo.name,
         userid: userinfo.id,
         postid: postid,
-        replyto: postedby,
+        replyto: comment?.name,
+      
+        commentid:comment?.id,
 
         userImg: userinfo.image,
         timestamp: serverTimestamp(),
       }
     );
 
-    const imageRef = ref(storage, `comments/${docRef.id}/image`);
+    const imageRef = ref(storage, `CommentComments/${docRef.id}/image`);
 
     if (selectedFile) {
       // Upload image as url to storage then send it to current user's post doc as update
       await uploadString(imageRef, selectedFile, "data_url").then(async () => {
         const downloadURL = await getDownloadURL(imageRef);
-        await updateDoc(doc(db, "InstaPosts", postid, "comments", docRef.id), {
+        await updateDoc(doc(db, "InstaPosts", postid, "comments",comment?.id,'CommentComments' ,docRef.id), {
           image: downloadURL,
         });
       });
@@ -84,13 +87,13 @@ const Input = ({ postedbyId, postedby, postedbyImage, postid, userinfo }) => {
   };
 
   return (
-    <div className="mb-20">
+    <div className="mb-20 border-t-2 border-t-slate-500 pt-6">
       <div>
         <div className=" w-full min-h-[166px]">
           {/* --header--- */}
           <div>
-            <p className="text-[18px] font-semibold ml-6">
-              Replaying to <span className=" text-[#5D8BF4]">@{postedby}</span>{" "}
+            <p className="text-[18px] font-semibold ">
+              Replaying to <span className=" text-[#5D8BF4]">@{comment?.name}</span>{" "}
             </p>
           </div>
 
@@ -106,16 +109,19 @@ const Input = ({ postedbyId, postedby, postedbyImage, postid, userinfo }) => {
                   src={userinfo?.image}
                   alt=""
                 />
+                <div>
+                    <p>{userinfo?.name}</p>
+                </div>
               </div>
 
               {/* ---comment input--- */}
 
               <div className="flex-1">
                 <div className="w-full">
-                  <input
+                  <textarea
                     onChange={(e) => setInput(e.target.value)}
                     value={input}
-                    className="border-none focus:border:none focus:outline-none inline-block w-full h-16 text-xl"
+                    className="border-none focus:border:none focus:outline-none inline-block w-[266px] h-16 text-xl"
                     type="text"
                     placeholder="write your comment"
                   />
@@ -205,4 +211,4 @@ const Input = ({ postedbyId, postedby, postedbyImage, postid, userinfo }) => {
   );
 };
 
-export default Input;
+export default  InputCommentPage;

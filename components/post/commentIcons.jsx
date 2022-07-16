@@ -7,7 +7,7 @@ import { Popover } from "antd";
 import {FaHeart} from 'react-icons/fa';
 import Link from "next/link";
 import { comment } from 'postcss';
-const CommentIcons = ({commentid,postid,fromComment =false}) => {
+const CommentIcons = ({commentid,postid,fromComment =false,likedPost}) => {
 
 const [hasLiked, setHasLiked] = useState(false);
 

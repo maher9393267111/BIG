@@ -4,8 +4,9 @@ import Link from "next/link";
 //import Moment from 'moment';
 import Moment from "react-moment";
 import ReactMarkdown from "react-markdown";
+import { FaAssistiveListeningSystems } from "react-icons/fa";
 
-const PostCart = ({ post,cathide=false }) => {
+const PostCart = ({ post,cathide=false ,postpage=false }) => {
   const {
     videos,
     topic,
@@ -49,6 +50,9 @@ const PostCart = ({ post,cathide=false }) => {
 
               {/* <ReactMarkdown children={caption}/> */}
             </div>
+          </div>
+          <div>
+            <p> {postpage ? (<div className="text-xl font-bold ml-4">{post?.caption}</div>): ''}</p>
           </div>
 
           <div className="w-full phone:h-[300px] tablet:h-[388px] laptop:h-[366px]  relative">
