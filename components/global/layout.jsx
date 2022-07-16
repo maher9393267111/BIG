@@ -24,12 +24,12 @@ const Layout = ({children}) => {
 
 {/* ---sidebar--- */}
 
-<div className=' col-span-3'>
+<div className='phone:hidden  laptop:block  laptop:col-span-3'>
     <Sidebar/>
 </div>
 
 
-<div className=' col-span-9'>
+<div className=' laptop:ml-2 laptop:mr-2  phone:ml-14 phone:mr-12 phone:col-span-12  laptop:col-span-9'>
     {children}
 </div>
 

@@ -44,7 +44,7 @@ const Postid = ({ post }) => {
 
   const [refresh, setRefresh] = useState(false);
 
-  const q2 = query(collection(db, "InstaPosts", post?.id, "comments"));
+  const q2 = query(collection(db, "InstaPosts", post?.id, "comments") , orderBy("timestamp", "desc"));
   const [comments] = useCollectionData(q2);
   //  console.log("comments---->>> is➿➿➿",comments);
 

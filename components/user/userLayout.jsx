@@ -49,20 +49,20 @@ const {userinfo} = useAuth();
  {userinfo?.email !== userid ?
 
 (
-        <div className={ ` ${noNavbar && 'mt-14 ml-12'}  phone:col-span-4  laptop:col-span-3`}>
+        <div className={ ` ${noNavbar && 'mt-14 ml-12'} phone:hidden  laptop:block   laptop:col-span-3`}>
             <Sidebar/>
         </div>
 ) : (
 
   
-        <div className=' phone:col-span-4  laptop:col-span-3'>
+        <div className=' phone:hidden  laptop:block  laptop:col-span-3'>
 
 <ChatsBar/>
             </div>
  
 )      }  
         
-        <div className={` ${noNavbar && 'mt-12'} phone:col-span-8  laptop:col-span-9`}>
+        <div className={` ${noNavbar && 'mt-12'} phone:col-span-10  laptop:col-span-9`}>
             {children}
         </div>
         
