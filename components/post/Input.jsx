@@ -88,7 +88,7 @@ const  selectEmoji = (emo) => {
   return (
     <div className="mb-20">
       <div>
-        <div className=" w-full h-[166px]">
+        <div className=" w-full min-h-[166px]">
           {/* --header--- */}
           <div>
             <p className="text-[18px] font-semibold ml-6">
@@ -129,10 +129,10 @@ const  selectEmoji = (emo) => {
               <div className=" relative">
                 <GrFormClose
                   onClick={() => setSelectedFile(null)}
-                  className="border  text-black absolute cursor-pointer shadow-lg border-white m-1 w-12 h-12 rounded-full"
+                  className="border  text-black absolute cursor-pointer shadow-lg border-white m-1 w-6 h-6 rounded-full"
                 />
                 <img
-                  className={`${loading && "animate-pulse"}`}
+                  className={`${loading && "animate-pulse"} w-24 h-24 rounded-full`}
                   src={selectedFile}
                   alt=""
                 />

@@ -7,6 +7,7 @@ import { Button, Popover } from "@chakra-ui/react";
 import {
   useCollectionData,
   useDocumentData,
+  useCollection
 } from "react-firebase-hooks/firestore";
 import {
   query,
@@ -44,9 +45,13 @@ const Postid = ({ post }) => {
 
   const [refresh, setRefresh] = useState(false);
 
-  const q2 = query(collection(db, "InstaPosts", post?.id, "comments") , orderBy("timestamp", "desc"));
-  const [comments] = useCollectionData(q2);
-  //  console.log("comments---->>> is➿➿➿",comments);
+
+
+  const [snapshot] = useCollection(collection(db, "InstaPosts", post?.id, "comments") , orderBy("timestamp", "desc"));
+
+  const comments= snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+console.log("comments---------<>",comments);
 
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
@@ -151,6 +156,7 @@ const Postid = ({ post }) => {
 <div>
   <ListCommnets
   comments={comments}
+  postid={post?.id}
   />
 </div>
 
