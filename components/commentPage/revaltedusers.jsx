@@ -8,50 +8,61 @@ const Revaltedusers = ({
   userinfo,
   postid,
   authUserFollowing,
+    refresh,
+    setRefresh,
 }) => {
-  //console.log("postOwner is--->", postedby);
-  // check if user is following the postedby user
-
+ 
   const isFollowing = (arg) =>
     authUserFollowing.filter((user) => user.name === arg);
 
-  //console.log("isFollowing💡💡💡💡--->", isFollowing);
 
   const makeFollow = async (user) => {
+    setRefresh(!refresh);
     Follow(userinfo, user);
   };
 
-  //console.log('authUserFollowing💡💡💡💡--->', authUserFollowing);
-
-  const check2= (userarg) => {
-    authUserFollowing?.map((user) => {
-      return (
-        <div key={user?.id}>
-          <h1>
-            <button>{user?.name === userarg ? "follow " : "unfollow"}</button>as
-          </h1>
-        </div>
-      );
-    });
+  const makeunfollowfunc = async (user) => {
+    setRefresh(!refresh);
+    unfollow(userinfo, user);
   };
 
 
-  const check = (userarg) => {
-    
 
-authUserFollowing?.filter((user) => {
-//console.log("user--->", user);
-    return  user?.name === userarg ? 'follow' : 'unfollow';
-    //  user?.name === userarg ? (
-    //     <div>asas</div>
-    // ) : (<div>asas </div> );
 
-})
+const [checpostuser,setchecpostuser ] = useState([]);
+const [commentusercheck,setcommentusercheck] = useState([]);
 
-    
 
-  };
+ 
 
+useEffect(() => {
+    // like.id is doc from likes collection  and compare it with current user's id
+    setchecpostuser(
+      authUserFollowing?.findIndex((user) => user.id === postedby) !== -1
+    );
+    console.log("has liked---->", checpostuser);
+  }, [authUserFollowing]);
+
+
+
+  useEffect(() => {
+    try {
+
+      const fetchUserList = async () => {
+       
+        setcommentusercheck(
+            authUserFollowing?.findIndex((user) => user.id === commentby) !== -1
+          );
+          console.log("has liked---->", commentusercheck);
+      };
+
+      fetchUserList();
+      console.log( "RRRRRRRRRRRR")
+     
+    } catch (error) {
+        console.log(error);
+    }
+  }, [authUserFollowing]);
 
 
   const [postuser, setPostuser] = useState({});
@@ -62,7 +73,7 @@ authUserFollowing?.filter((user) => {
     if (postedby) {
       findUserById(postedby).then((user) => {
         setPostuser(user);
-      //  console.log("postuser-🛑 aaaaa  🛑  🛑-->", postuser);
+      //  console.log("REEEEEEFREEESH");
       });
     }
   }, [postedby, commentby]);
@@ -79,19 +90,16 @@ authUserFollowing?.filter((user) => {
   // make unfollow
 
   const makeUnfollow = async (user) => {
-    //console.log("--->👉️👉️👉️👉️👉️👉️", user);
-    // e.preventDefault();
+    setRefresh(!refresh);
     unfollow(userinfo, user);
   };
 
   return (
     <div>
-      {/* {isFollowing(commentby) } */}
-
-      {/* {authUserFollowing?.length} */}
+   
 
       <div>
-        {/* -header----- */}
+       
 
         <div>
           <p className="text-center font-bold text-2xl">Relevant people</p>
@@ -107,25 +115,101 @@ authUserFollowing?.filter((user) => {
               <div>
                 <img
                   className=" w-[77px] h-[77px] rounded-full"
-                  src={postuser?.image}
+                  src={comuser?.image}
                   alt=""
                 />
               </div>
 
               <div className="text-[17px] mt-4 font-semibold ">
                 <p className=" mb-[3px]">{postuser?.name}</p>
-                <p>{postuser?.email}</p>
+                <p>{comuser?.email}</p>
               </div>
 
               {/* ---follow or unfollow button--- */}
 
-              <div className=" flex-1">{check(postuser?.name)}</div>
+              <div className=" flex-1 mt-4">
+
+
+<div>
+
+
+
+{checpostuser && (
+<div className="ml-12"> <button
+
+onClick={() => makeUnfollow(postuser)}
+className="  bg-red-400 text-white font-bold text-center p-2 rounded-full  hover:bg-red-700">Unfollow</button> </div>) 
+
+}
+
+{ !checpostuser &&   (
+
+<div
+    onClick={() => makeFollow(postuser)} 
+    
+    className="  hover:bg-blue-700 bg-blue-400 text-white font-bold text-center p-2 rounded-full">follow</div>
+)}
+
+
+</div>
+
+
+              </div>
             </div>
           </div>
 
           {/* ----commenteduser--- */}
 
-          <div className="my-8"></div>
+          <div className="my-8">
+
+          <div className=" flex gap-4">
+              <div>
+                <img
+                  className=" w-[77px] h-[77px] rounded-full"
+                  src={comuser?.image}
+                  alt=""
+                />
+              </div>
+
+              <div className="text-[17px] mt-4 font-semibold ">
+                <p className=" mb-[3px]">{comuser?.name}</p>
+                <p>{comuser?.email}</p>
+              </div>
+
+              {/* ---follow or unfollow button--- */}
+
+              <div className=" flex-1 mt-4">
+
+              { userinfo?.id !== comuser?.id && ( 
+<div>
+
+{commentusercheck && (
+<div className="ml-12"> <button
+
+onClick={() => makeUnfollow(comuser)}
+className="  bg-red-400 text-white font-bold text-center p-2 rounded-full  hover:bg-red-700">Unfollow</button> </div>) 
+
+}
+
+{ !commentusercheck &&   (
+
+<div
+    onClick={() => makeFollow(comuser)} 
+    
+    className="  hover:bg-blue-700 bg-blue-400 text-white font-bold text-center p-2 rounded-full">follow</div>
+)}
+
+
+
+              </div>
+                )}
+              </div>
+                
+            </div>
+
+
+
+          </div>
         </div>
       </div>
 

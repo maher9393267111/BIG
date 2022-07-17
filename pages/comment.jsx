@@ -32,6 +32,7 @@ import Revaltedusers from "../components/commentPage/revaltedusers";
 const Commentid = ({ post, comment }) => {
   const router = useRouter();
   const { userinfo } = useAuth();
+  const [refresh, setRefresh] = useState(false);
 const [authuserFollowing, setAuthUserFollowing] = useState([]);
   const [snapshot] = useCollection(
     collection(db, "InstaPosts", post?.id, "comments"),
@@ -64,7 +65,19 @@ const [authuserFollowing, setAuthUserFollowing] = useState([]);
   }));
 
 
-console.log("Replays Length-🔴🔴🔴-------<>",Replays);
+
+  const [snapauth] = useCollection(
+    userinfo?.id !== undefined &&   collection(db, "users", userinfo?.id , "following"),
+   // orderBy("timestamp", "desc")
+  );
+
+  const authfo = snapauth?.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  console.log("authfo🥁🥁🥁🥁🥁🥁---------<>",authfo);
+
 
 
 
@@ -81,7 +94,7 @@ if (userinfo?.id !== undefined)
 }
   
 
-}, [userinfo?.id]);
+}, [userinfo?.id,refresh]);
 
 
 
@@ -254,8 +267,10 @@ if (userinfo?.id !== undefined)
 
 <div>
   <Revaltedusers 
+  refresh={refresh}
+  setRefresh={setRefresh}
   
-  authUserFollowing={authuserFollowing}
+  authUserFollowing={authfo}
   postid={post?.id} commentby={comment?.userid} postedby={post?.postedbyId} userinfo={userinfo}  />
 </div>
 
